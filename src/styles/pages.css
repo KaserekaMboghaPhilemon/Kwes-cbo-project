@@ -1,0 +1,73 @@
+/* Page-specific styles */
+
+/* Home page styles */
+.md {
+  justify-content: center;
+  display: flex;
+}
+nav {
+  background: #000;
+}
+.home-hero {
+  @apply relative h-screen flex items-center justify-center overflow-hidden;
+}
+
+.home-stats {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-8 text-center;
+}
+
+.home-programs {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8;
+}
+
+/* About page styles */
+.about-mission {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-12 items-center;
+}
+
+.about-story {
+  @apply bg-neutral p-8 rounded-2xl;
+}
+
+/* Programs page styles */
+.programs-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+}
+
+.program-details {
+  @apply mt-6 p-6 bg-white rounded-2xl shadow-lg;
+}
+
+/* Impact page styles */
+.impact-cards {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8 mb-20;
+}
+
+.impact-stats {
+  @apply text-center p-6 bg-white rounded-lg shadow-md;
+}
+
+.testimonials-section {
+  @apply bg-neutral p-12 rounded-2xl;
+}
+
+.testimonials-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8;
+}
+
+/* Contact page styles */
+.contact-grid {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-12;
+}
+
+.contact-form {
+  @apply bg-white p-8 rounded-2xl shadow-lg;
+}
+
+.contact-info {
+  @apply space-y-6;
+}
+
+.contact-card {
+  @apply bg-white p-6 rounded-lg shadow-md;
+}

@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Import separate style files */
+@import './styles/components.css';
+@import './styles/utilities.css';
+@import './styles/pages.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1f2937;
+    line-height: 1.6;
+    background-color: #FDFBF7; /* ngo-cream */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Dark mode base */
+  html.dark body {
+    color: #e2e8f0;
+    background-color: #0f172a; /* slate-900 */
+  }
+
+  * { box-sizing: border-box; }
+  img { max-width: 100%; height: auto; }
+}
+
+/* ============================================================================
+   GLOBAL OVERLAP FIX
+   pt-32 on <main> (128px) is the primary defence; this class is a fallback
+   for any standalone page wrapper that doesn't sit inside the App <main>.
+   ========================================================================== */
+@layer components {
+  .page-container {
+    padding-top: 128px; /* matches App.jsx pt-32 */
+  }
+  main.page-container { min-height: calc(100vh - 128px); }
+
+  /* Layout-shift protection: nav links must never wrap to a second line
+     when a translation is longer than the English original. */
+  nav a, .nav-link {
+    white-space: nowrap;
+  }
+
+  /* Section min-heights so longer translated paragraphs cannot push
+     adjacent images (e.g. women-cleaning) out of the visual rhythm. */
+  .section-min     { min-height: 24rem; }   /* small bands */
+  .section-min-md  { min-height: 32rem; }   /* default content sections */
+  .section-min-lg  { min-height: 40rem; }   /* hero / showcase */
+}
+
+/* ============================================================================
+   GLOBAL IMAGE STYLE — Gallery-grade look.
+   Opt-out by adding the `.img-raw` class to any <img>.
+   ========================================================================== */
+img:not(.img-raw):not([aria-hidden="true"]) {
+  filter: brightness(0.95) contrast(1.05);
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* ============================================================================
+   NAVBAR — HAMBURGER GUIDE POPUP
+   Fixed-position bubble that sits below the circular hamburger button.
+   Forest-green (#004d40) with a white upward-pointing triangle.
+   Uses z-index 999 so nothing on the page can ever cover it.
+   ========================================================================== */
+.kwes-guide-popup {
+  /* Top/right are set inline from JS so the bubble tracks the hamburger
+     across resizes and scrolls. */
+  filter: drop-shadow(0 10px 20px rgba(0, 77, 64, 0.35));
+}
+
+.kwes-guide-bubble {
+  background-color: #004d40;
+  color: #ffffff;
+}
+
+/* Upward-pointing triangle (a rotated square clipped by the bubble). */
+.kwes-guide-arrow {
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background-color: #004d40;
+  transform: rotate(45deg);
+  border-top-left-radius: 2px;
+  box-shadow: -1px -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Subtle attention pulse while the popup is visible. */
+@keyframes kwes-guide-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 77, 64, 0.45); }
+  50%      { box-shadow: 0 0 0 10px rgba(0, 77, 64, 0); }
+}
+.kwes-guide-bubble {
+  animation: kwes-guide-pulse 2.2s ease-out infinite;
+}
