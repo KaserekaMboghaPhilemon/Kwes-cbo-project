@@ -54,7 +54,7 @@ const fadeUp = {
 
 const Home = () => {
   return (
-    <div className="min-h-screen font-sans text-gray-900 bg-white antialiased">
+    <div className="min-h-screen font-sans text-slate-900 bg-white dark:text-slate-100 dark:bg-slate-950 transition-colors duration-300 antialiased">
       {/* ---------- HERO ---------- */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#001a33] via-[#013055] to-white">
         {/* Decorative glow blobs */}
@@ -160,7 +160,7 @@ const Home = () => {
       </section>
 
       {/* ---------- PROBLEM / SOLUTION ---------- */}
-      <section className="bg-white py-24">
+      <section className="bg-white dark:bg-slate-950 transition-colors duration-300 py-24">
         <div className="mx-auto max-w-7xl px-6">
           <motion.div
             variants={fadeUp}
@@ -258,7 +258,7 @@ const Home = () => {
                 whileInView="show"
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/5 ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-[#004d40]/15"
+                className="group overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-2xl shadow-black/5 ring-1 ring-black/5 dark:ring-white/10 transition hover:-translate-y-1 hover:shadow-[#004d40]/15"
               >
                 <div className="relative h-56 overflow-hidden">
                   <img
@@ -319,7 +319,7 @@ const Home = () => {
       </section>
 
       {/* ---------- CTA ---------- */}
-      <section className="relative overflow-hidden bg-white py-24">
+      <section className="relative overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-300 py-24">
         <div className="mx-auto max-w-5xl px-6">
           <motion.div
             variants={fadeUp}

@@ -101,7 +101,7 @@ const About = () => {
   const yFloat2 = useTransform(heroProgress, [0, 1], [0, -60]);
 
   return (
-    <div className="bg-white text-[#1a1a1a]">
+    <div className="bg-white text-[#1a1a1a] dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
       {/* ============== STORY HERO ============== */}
       <section ref={heroRef} className="relative px-4 pt-16 md:pt-24 pb-32 overflow-hidden">
         <div className="max-w-container mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
@@ -296,7 +296,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative bg-white border-2 border-[#004d40]/10 rounded-3xl p-10 md:p-12 overflow-hidden"
+              className="relative bg-white dark:bg-slate-900 border-2 border-[#004d40]/10 dark:border-white/10 rounded-3xl p-10 md:p-12 overflow-hidden"
             >
               <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-[#004d40]/5 blur-2xl" />
               <div className="relative">
@@ -346,7 +346,7 @@ const About = () => {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true }}
-                className="group bg-white rounded-3xl p-7 ring-1 ring-black/5 hover:shadow-xl hover:-translate-y-1 transition duration-500"
+                className="group bg-white dark:bg-slate-900 rounded-3xl p-7 ring-1 ring-black/5 dark:ring-white/10 hover:shadow-xl hover:-translate-y-1 transition duration-500"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#004d40]/10 text-[#004d40] flex items-center justify-center mb-5 group-hover:bg-[#004d40] group-hover:text-white transition">
                   <Icon size={22} />
