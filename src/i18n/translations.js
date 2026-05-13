@@ -222,10 +222,10 @@ const en = {
   "donate.project.training.label": "Training & Entrepreneurship",
   "donate.project.training.tagline": "Cohorts, mentors, toolkits",
   "donate.impact.title": "Your impact",
-  "donate.impact.poultry": "Your donation provides feed and vaccines for {n} chicks.",
-  "donate.impact.tailoring": "Your donation provides {n} sewing kits for student trainees.",
-  "donate.impact.agribusiness": "Your donation helps plant {n} organic fruit trees.",
-  "donate.impact.entrepreneurship": "Your donation funds {n} training sessions for aspiring entrepreneurs.",
+  "donate.impact.poultry": "Your donation provides {n} bags of high-protein feed to sustain the community poultry farm.",
+  "donate.impact.tailoring": "Your donation equips {n} women with professional tailoring start-up kits (scissors, fabric, threads) to begin their own business.",
+  "donate.impact.agribusiness": "Your donation provides {n} packs of climate-resilient seeds for our sustainable desert farming initiative.",
+  "donate.impact.entrepreneurship": "Your donation covers the official certification fees for {n} youth graduating from our entrepreneurship program.",
   "donate.impact.general": "Your donation provides {n} meals for women and youth in Kakuma.",
 };
 
@@ -424,10 +424,10 @@ const sw = {
   "donate.project.training.label": "Mafunzo na Ujasiriamali",
   "donate.project.training.tagline": "Mafunzo, washauri, zana",
   "donate.impact.title": "Athari yako",
-  "donate.impact.poultry": "Mchango wako unatoa chakula na chanjo kwa vifaranga {n}.",
-  "donate.impact.tailoring": "Mchango wako unatoa vifaa {n} vya ushonaji kwa wanafunzi.",
-  "donate.impact.agribusiness": "Mchango wako unasaidia kupanda miti ya matunda {n} ya kiasili.",
-  "donate.impact.entrepreneurship": "Mchango wako unagharimu mafunzo {n} kwa wajasiriamali chipukizi.",
+  "donate.impact.poultry": "Mchango wako unatoa magunia {n} ya chakula chenye protini ya hali ya juu kudumisha shamba la kuku la jamii.",
+  "donate.impact.tailoring": "Mchango wako unawapa wanawake {n} vifaa kamili vya kuanzia ushonaji (mkasi, vitambaa na nyuzi) kuanzisha biashara zao.",
+  "donate.impact.agribusiness": "Mchango wako unatoa pakiti {n} za mbegu stahimilivu ya hali ya hewa kwa mradi wetu wa kilimo cha jangwani endelevu.",
+  "donate.impact.entrepreneurship": "Mchango wako unagharimia ada rasmi za vyeti kwa vijana {n} wanaohitimu kutoka programu yetu ya ujasiriamali.",
   "donate.impact.general": "Mchango wako unatoa milo {n} kwa wanawake na vijana wa Kakuma.",
 };
 
@@ -626,10 +626,10 @@ const fr = {
   "donate.project.training.label": "Formation & Entrepreneuriat",
   "donate.project.training.tagline": "Cohortes, mentors, outils",
   "donate.impact.title": "Votre impact",
-  "donate.impact.poultry": "Votre don fournit aliments et vaccins pour {n} poussins.",
-  "donate.impact.tailoring": "Votre don fournit {n} kits de couture aux apprenants.",
-  "donate.impact.agribusiness": "Votre don permet de planter {n} arbres fruitiers biologiques.",
-  "donate.impact.entrepreneurship": "Votre don finance {n} sessions de formation pour entrepreneurs en herbe.",
+  "donate.impact.poultry": "Votre don fournit {n} sacs d'aliment riche en protéines pour soutenir la ferme avicole communautaire.",
+  "donate.impact.tailoring": "Votre don équipe {n} femmes de kits professionnels de démarrage en couture (ciseaux, tissu, fils) pour lancer leur propre activité.",
+  "donate.impact.agribusiness": "Votre don fournit {n} sachets de semences résilientes au climat pour notre initiative d'agriculture désertique durable.",
+  "donate.impact.entrepreneurship": "Votre don couvre les frais officiels de certification pour {n} jeunes diplômés de notre programme d'entrepreneuriat.",
   "donate.impact.general": "Votre don offre {n} repas aux femmes et jeunes de Kakuma.",
 };
 
@@ -828,10 +828,10 @@ const es = {
   "donate.project.training.label": "Formación y Emprendimiento",
   "donate.project.training.tagline": "Cohortes, mentores, herramientas",
   "donate.impact.title": "Tu impacto",
-  "donate.impact.poultry": "Tu donación aporta alimento y vacunas a {n} pollitos.",
-  "donate.impact.tailoring": "Tu donación entrega {n} kits de costura a aprendices.",
-  "donate.impact.agribusiness": "Tu donación permite plantar {n} árboles frutales orgánicos.",
-  "donate.impact.entrepreneurship": "Tu donación financia {n} sesiones de formación para emprendedores.",
+  "donate.impact.poultry": "Tu donación entrega {n} sacos de alimento alto en proteínas para sostener la granja avícola comunitaria.",
+  "donate.impact.tailoring": "Tu donación equipa a {n} mujeres con kits profesionales de inicio en costura (tijeras, telas e hilos) para emprender su propio negocio.",
+  "donate.impact.agribusiness": "Tu donación aporta {n} paquetes de semillas resistentes al clima para nuestra iniciativa de agricultura sostenible en el desierto.",
+  "donate.impact.entrepreneurship": "Tu donación cubre las tasas oficiales de certificación para {n} jóvenes que se gradúan de nuestro programa de emprendimiento.",
   "donate.impact.general": "Tu donación ofrece {n} comidas a mujeres y jóvenes de Kakuma.",
 };
 
@@ -1028,10 +1028,10 @@ const ar = {
   "donate.project.training.label": "التدريب وريادة الأعمال",
   "donate.project.training.tagline": "دفعات، موجهون، أدوات",
   "donate.impact.title": "أثرك",
-  "donate.impact.poultry": "تبرعك يوفر علفاً ولقاحات لـ {n} صغير دجاج.",
-  "donate.impact.tailoring": "تبرعك يقدم {n} أطقم خياطة للمتدربات.",
-  "donate.impact.agribusiness": "تبرعك يساعد في زراعة {n} شجرة فواكه عضوية.",
-  "donate.impact.entrepreneurship": "تبرعك يموّل {n} جلسة تدريبية لرواد أعمال طامحين.",
+  "donate.impact.poultry": "تبرعك يوفر {n} أكياساً من علف الدواجن الغني بالبروتين لدعم مزرعة الدواجن المجتمعية.",
+  "donate.impact.tailoring": "تبرعك يزوّد {n} امرأة بأطقم خياطة مهنية للبدء (مقص، قماش، خيوط) ليبدأن أعمالهن الخاصة.",
+  "donate.impact.agribusiness": "تبرعك يوفر {n} عبوة من البذور المقاومة للمناخ لمبادرتنا للزراعة الصحراوية المستدامة.",
+  "donate.impact.entrepreneurship": "تبرعك يغطي رسوم الشهادات الرسمية لـ {n} شابًا وشابّة يتخرجون من برنامج ريادة الأعمال.",
   "donate.impact.general": "تبرعك يوفر {n} وجبة لنساء وشباب كاكوما.",
 };
 
@@ -1226,10 +1226,10 @@ const zh = {
   "donate.project.training.label": "培训与创业",
   "donate.project.training.tagline": "期数、导师、工具",
   "donate.impact.title": "你的影响力",
-  "donate.impact.poultry": "你的捐赠为 {n} 只雏鸡提供饲料与疫苗。",
-  "donate.impact.tailoring": "你的捐赠为学员提供 {n} 个缝纫包。",
-  "donate.impact.agribusiness": "你的捐赠帮助种植 {n} 棵有机果树。",
-  "donate.impact.entrepreneurship": "你的捐赠资助 {n} 场面向创业者的培训课。",
+  "donate.impact.poultry": "你的捐赠提供 {n} 袋高蛋白饲料，支撑社区家禽场。",
+  "donate.impact.tailoring": "你的捐赠为 {n} 名妇女提供专业裁缝创业套装（剪刀、布料与线），帮助她们开设自己的生意。",
+  "donate.impact.agribusiness": "你的捐赠提供 {n} 包耐气候种子，用于我们可持续的沙漠农业项目。",
+  "donate.impact.entrepreneurship": "你的捐赠为 {n} 名从创业计划毕业的青年支付官方认证费。",
   "donate.impact.general": "你的捐赠为卡库马的妇女与青年提供 {n} 顿饭。",
 };
 
@@ -1428,10 +1428,10 @@ const pt = {
   "donate.project.training.label": "Formação & Empreendedorismo",
   "donate.project.training.tagline": "Cohorts, mentores, ferramentas",
   "donate.impact.title": "O teu impacto",
-  "donate.impact.poultry": "O teu donativo dá ração e vacinas a {n} pintos.",
-  "donate.impact.tailoring": "O teu donativo entrega {n} kits de costura aos formandos.",
-  "donate.impact.agribusiness": "O teu donativo planta {n} árvores de fruto orgânicas.",
-  "donate.impact.entrepreneurship": "O teu donativo financia {n} sessões de formação para empreendedores.",
+  "donate.impact.poultry": "O teu donativo fornece {n} sacos de ração rica em proteínas para sustentar a quinta avícola da comunidade.",
+  "donate.impact.tailoring": "O teu donativo equipa {n} mulheres com kits profissionais de costura (tesouras, tecido e linhas) para iniciarem o seu próprio negócio.",
+  "donate.impact.agribusiness": "O teu donativo entrega {n} pacotes de sementes resistentes ao clima para a nossa iniciativa de agricultura sustentável no deserto.",
+  "donate.impact.entrepreneurship": "O teu donativo cobre as taxas oficiais de certificação de {n} jovens formados pelo nosso programa de empreendedorismo.",
   "donate.impact.general": "O teu donativo oferece {n} refeições a mulheres e jovens de Kakuma.",
 };
 
@@ -1630,10 +1630,10 @@ const de = {
   "donate.project.training.label": "Training & Unternehmertum",
   "donate.project.training.tagline": "Kurse, Mentoren, Werkzeuge",
   "donate.impact.title": "Deine Wirkung",
-  "donate.impact.poultry": "Deine Spende liefert Futter und Impfstoffe für {n} Küken.",
-  "donate.impact.tailoring": "Deine Spende stellt {n} Nähkits für Auszubildende bereit.",
-  "donate.impact.agribusiness": "Deine Spende pflanzt {n} biologische Obstbäume.",
-  "donate.impact.entrepreneurship": "Deine Spende finanziert {n} Trainingseinheiten für angehende Unternehmer.",
+  "donate.impact.poultry": "Deine Spende liefert {n} Säcke proteinreiches Geflügelfutter, um die Geflügelfarm der Gemeinde am Laufen zu halten.",
+  "donate.impact.tailoring": "Deine Spende stattet {n} Frauen mit professionellen Schneiderei-Startersets (Schere, Stoff, Garne) aus, um ein eigenes Geschäft zu eröffnen.",
+  "donate.impact.agribusiness": "Deine Spende stellt {n} Päckchen klimaresilienter Saat für unsere nachhaltige Wüstenlandwirtschafts-Initiative bereit.",
+  "donate.impact.entrepreneurship": "Deine Spende deckt die offiziellen Zertifizierungsgebühren für {n} Jugendliche, die unser Unternehmertums-Programm abschließen.",
   "donate.impact.general": "Deine Spende sichert {n} Mahlzeiten für Frauen und Jugendliche in Kakuma.",
 };
 

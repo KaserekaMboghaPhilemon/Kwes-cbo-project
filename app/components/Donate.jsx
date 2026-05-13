@@ -31,6 +31,19 @@ import CurrencySelector, {
 import SmartAmountInput from "./SmartAmountInput";
 import ProjectSelector, { computeImpactText } from "./ProjectSelector";
 
+// ---- Local project preview photos (used in the dynamic Impact box) -------
+import poultryImg        from "../../src/Images/improved-kienyeji.jpg";
+import tailoringImg      from "../../src/Images/women-working.jpg";
+import agribusinessImg   from "../../src/Images/compound-clean.jpg";
+import entrepreneurImg   from "../../src/Images/women-cleaning2.jpg";
+
+const PROJECT_PHOTOS = {
+  poultry:          { src: poultryImg,      alt: "KWES poultry farming project in Kakuma"           },
+  tailoring:        { src: tailoringImg,    alt: "KWES tailoring & fashion training"                },
+  agribusiness:     { src: agribusinessImg, alt: "KWES sustainable agribusiness compound"           },
+  entrepreneurship: { src: entrepreneurImg, alt: "KWES entrepreneurship & community training"       },
+};
+
 // ---------------------------------------------------------------------------
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -221,20 +234,31 @@ const Donate = () => {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="mt-6 flex items-start gap-3 rounded-2xl bg-orange-50 p-4 ring-1 ring-orange-200 dark:bg-orange-950/30 dark:ring-orange-900/40"
+                  className="mt-6 flex items-stretch gap-4 rounded-2xl bg-orange-50 p-4 ring-1 ring-orange-200 dark:bg-orange-950/30 dark:ring-orange-900/40"
                 >
-                  <Sparkles className="mt-0.5 h-5 w-5 flex-shrink-0 text-safety-orange" />
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-widest text-safety-orange">
-                      {t("donate.impact.title")}
-                    </p>
-                    <p className="mt-1 text-sm font-semibold text-orange-900 dark:text-orange-100">
-                      {computeImpactText(
-                        tier === "custom" ? Number(custom) || 0 : tier,
-                        project,
-                        t
-                      )}
-                    </p>
+                  {PROJECT_PHOTOS[project] && (
+                    <div className="relative hidden h-20 w-28 flex-shrink-0 overflow-hidden rounded-xl shadow-md sm:block">
+                      <img
+                        src={PROJECT_PHOTOS[project].src}
+                        alt={PROJECT_PHOTOS[project].alt}
+                        className="ngo-photo"
+                      />
+                    </div>
+                  )}
+                  <div className="flex items-start gap-3">
+                    <Sparkles className="mt-0.5 h-5 w-5 flex-shrink-0 text-safety-orange" />
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-safety-orange">
+                        {t("donate.impact.title")}
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-orange-900 dark:text-orange-100">
+                        {computeImpactText(
+                          tier === "custom" ? Number(custom) || 0 : tier,
+                          project,
+                          t
+                        )}
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
 

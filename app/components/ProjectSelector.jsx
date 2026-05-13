@@ -100,19 +100,18 @@ export default ProjectSelector;
 //  selected project id and the i18n t() function. Returns a fully-formed,
 //  human sentence ready to drop into the orange Impact box.
 //
-//  Per-unit costs (USD) — these are the same anchor points the design spec
-//  references at the $10 reference donation:
-//      poultry          → $0.20 / chick   ($10 = 50 chicks)
-//      tailoring        → $5    / kit     ($10 = 2 sewing kits)
-//      agribusiness     → $1    / tree    ($10 = 10 fruit trees)
-//      entrepreneurship → $10   / session ($10 = 1 training session)
-//      (no project)     → $2    / meal    (general fallback copy)
+//  Per-unit costs (USD) — anchored on real KWES CBO operations in Kakuma:
+//      poultry          → $15 / bag of high-protein poultry feed (~KES 2,000)
+//      tailoring        → $25 / professional start-up tailoring kit (~KES 3,200)
+//      agribusiness     → $5  / climate-resilient seed pack
+//      entrepreneurship → $50 / vocational certification fee
+//      (no project)     → $2  / meal (general fallback copy)
 // ===========================================================================
 const IMPACT_RATES = {
-  poultry:          { usdPerUnit: 0.20, key: "donate.impact.poultry"          },
-  tailoring:        { usdPerUnit: 5,    key: "donate.impact.tailoring"        },
-  agribusiness:     { usdPerUnit: 1,    key: "donate.impact.agribusiness"     },
-  entrepreneurship: { usdPerUnit: 10,   key: "donate.impact.entrepreneurship" },
+  poultry:          { usdPerUnit: 15, key: "donate.impact.poultry"          },
+  tailoring:        { usdPerUnit: 25, key: "donate.impact.tailoring"        },
+  agribusiness:     { usdPerUnit: 5,  key: "donate.impact.agribusiness"     },
+  entrepreneurship: { usdPerUnit: 50, key: "donate.impact.entrepreneurship" },
 };
 
 const FALLBACK = { usdPerUnit: 2, key: "donate.impact.general" };
