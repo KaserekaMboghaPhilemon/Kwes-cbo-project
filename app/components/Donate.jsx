@@ -28,6 +28,7 @@ import CurrencySelector, {
   convertFromUSD,
   formatMoney,
 } from "./CurrencySelector";
+import SmartAmountInput from "./SmartAmountInput";
 
 // ---------------------------------------------------------------------------
 const fadeUp = {
@@ -57,7 +58,8 @@ const Donate = () => {
   const { t } = useLanguage();
 
   const [tier, setTier] = useState(50);          // 10 | 50 | 100 | "custom"
-  const [custom, setCustom] = useState("");
+  const [custom, setCustom] = useState(0);       // canonical USD amount
+  const [project, setProject] = useState("");    // project focus (for impact)
   const [recurring, setRecurring] = useState(false);
   const [currency, setCurrency] = useState(findCurrency("USD"));
   const [form, setForm] = useState({ name: "", email: "" });
@@ -81,6 +83,14 @@ const Donate = () => {
     tier === "custom"
       ? (custom ? `$${custom} (${fmt(Number(custom) || 0)})` : t("donate.tier.custom.label"))
       : `$${tier} (${fmt(tier)})`;
+
+  // Master reset — wipes amount, currency and project focus.
+  const resetSmart = () => {
+    setTier("custom");
+    setCustom(0);
+    setCurrency(findCurrency("USD"));
+    setProject("");
+  };
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   const onSubmit = (e) => {
@@ -161,88 +171,39 @@ const Donate = () => {
               </div>
 
               <div className="px-6 py-8 sm:px-10">
-                {/* ---- Tier grid ---- */}
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {/* ---- Tier grid (preset amounts) ---- */}
+                <div className="grid gap-4 sm:grid-cols-3">
                   {tiers.map((opt) => (
                     <TierCard
                       key={opt.value}
                       active={tier === opt.value}
-                      onClick={() => setTier(opt.value)}
-                      usd={opt.value}
+                      onClick={() => { setTier(opt.value); setCustom(opt.value); }}
                       label={fmt(opt.value)}
                       sub={`USD $${opt.value}`}
                       caption={opt.caption}
                     />
                   ))}
+                </div>
 
-                  {/* Custom amount + Currency selector */}
-                  <div className="sm:col-span-2 lg:col-span-1 flex flex-col gap-3 sm:flex-row lg:flex-col">
-                    {/* Custom amount card */}
-                    <button
-                      type="button"
-                      onClick={() => setTier("custom")}
-                      aria-pressed={tier === "custom"}
-                      className={`group flex flex-1 flex-col items-start rounded-2xl border-2 p-5 text-left transition ${
-                        tier === "custom"
-                          ? "border-safety-orange bg-safety-orange text-white shadow-xl ring-4 ring-safety-orange/30"
-                          : "border-slate-200 bg-white hover:border-safety-orange/60 hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800"
-                      }`}
-                    >
-                      <span
-                        className={`text-xs font-bold uppercase tracking-widest ${
-                          tier === "custom"
-                            ? "text-white/80"
-                            : "text-safety-orange"
-                        }`}
-                      >
-                        {t("donate.tier.custom.label")}
-                      </span>
-                      <div className="mt-2 flex w-full items-center gap-2">
-                        <span
-                          className={`text-2xl font-extrabold ${
-                            tier === "custom"
-                              ? "text-white"
-                              : "text-forest-green dark:text-white"
-                          }`}
-                        >
-                          $
-                        </span>
-                        <input
-                          type="number"
-                          inputMode="numeric"
-                          min="1"
-                          placeholder="100"
-                          value={custom}
-                          onFocus={() => setTier("custom")}
-                          onChange={(e) => setCustom(e.target.value)}
-                          className={`w-full rounded-md bg-transparent text-2xl font-extrabold outline-none ${
-                            tier === "custom"
-                              ? "text-white placeholder:text-white/60"
-                              : "text-forest-green placeholder:text-slate-400 dark:text-white"
-                          }`}
-                        />
-                      </div>
-                      <span
-                        className={`mt-1 text-xs ${
-                          tier === "custom"
-                            ? "text-white/85"
-                            : "text-slate-500 dark:text-slate-400"
-                        }`}
-                      >
-                        {custom
-                          ? `≈ ${fmt(Number(custom) || 0)}`
-                          : t("donate.tier.custom.caption")}
-                      </span>
-                    </button>
+                {/* ---- SMART HYBRID AMOUNT INPUT + CURRENCY ---- */}
+                <div className="mt-6 grid gap-4 lg:grid-cols-[1.6fr_1fr]">
+                  <SmartAmountInput
+                    amount={tier === "custom" ? Number(custom) || 0 : tier}
+                    onAmountChange={(usd) => { setTier("custom"); setCustom(usd); }}
+                    currency={currency}
+                    project={project}
+                    onReset={resetSmart}
+                  />
 
-                    {/* Currency selector — sits right next to Custom Amount */}
-                    <div className="flex-1 rounded-2xl border-2 border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
-                      <CurrencySelector
-                        value={currency}
-                        onChange={setCurrency}
-                        label="Currency"
-                      />
-                    </div>
+                  <div className="rounded-2xl border-2 border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
+                    <CurrencySelector
+                      value={currency}
+                      onChange={setCurrency}
+                      label="Currency"
+                    />
+                    <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+                      Tier cards and the slider re-price live as you change currency.
+                    </p>
                   </div>
                 </div>
 
