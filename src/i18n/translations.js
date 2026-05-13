@@ -210,6 +210,23 @@ const en = {
   "donate.summary.oneTime": "as a one-time gift",
   "donate.summary.monthly": "every month",
   "donate.cta": "Donate Now",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "Choose your project focus",
+  "donate.project.subtitle": "Pick where your gift goes — we'll show the impact live.",
+  "donate.project.poultry.label": "Poultry Farming",
+  "donate.project.poultry.tagline": "Feed, vaccines & chicks",
+  "donate.project.tailoring.label": "Tailoring & Fashion",
+  "donate.project.tailoring.tagline": "Sewing kits & uniforms",
+  "donate.project.agribusiness.label": "Sustainable Agribusiness",
+  "donate.project.agribusiness.tagline": "Trees & kitchen gardens",
+  "donate.project.training.label": "Training & Entrepreneurship",
+  "donate.project.training.tagline": "Cohorts, mentors, toolkits",
+  "donate.impact.title": "Your impact",
+  "donate.impact.poultry": "Your donation provides feed and vaccines for {n} chicks.",
+  "donate.impact.tailoring": "Your donation provides {n} sewing kits for student trainees.",
+  "donate.impact.agribusiness": "Your donation helps plant {n} organic fruit trees.",
+  "donate.impact.entrepreneurship": "Your donation funds {n} training sessions for aspiring entrepreneurs.",
+  "donate.impact.general": "Your donation provides {n} meals for women and youth in Kakuma.",
 };
 
 const sw = {
@@ -395,6 +412,23 @@ const sw = {
   "donate.summary.oneTime": "kama mchango wa mara moja",
   "donate.summary.monthly": "kila mwezi",
   "donate.cta": "Toa Sasa",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "Chagua mradi unaopenda",
+  "donate.project.subtitle": "Chagua zawadi yako itumike wapi — tunaonyesha athari mara moja.",
+  "donate.project.poultry.label": "Ufugaji wa Kuku",
+  "donate.project.poultry.tagline": "Chakula, chanjo na vifaranga",
+  "donate.project.tailoring.label": "Ushonaji na Mitindo",
+  "donate.project.tailoring.tagline": "Vifaa vya ushonaji na sare",
+  "donate.project.agribusiness.label": "Kilimo-biashara Endelevu",
+  "donate.project.agribusiness.tagline": "Miti na bustani za jikoni",
+  "donate.project.training.label": "Mafunzo na Ujasiriamali",
+  "donate.project.training.tagline": "Mafunzo, washauri, zana",
+  "donate.impact.title": "Athari yako",
+  "donate.impact.poultry": "Mchango wako unatoa chakula na chanjo kwa vifaranga {n}.",
+  "donate.impact.tailoring": "Mchango wako unatoa vifaa {n} vya ushonaji kwa wanafunzi.",
+  "donate.impact.agribusiness": "Mchango wako unasaidia kupanda miti ya matunda {n} ya kiasili.",
+  "donate.impact.entrepreneurship": "Mchango wako unagharimu mafunzo {n} kwa wajasiriamali chipukizi.",
+  "donate.impact.general": "Mchango wako unatoa milo {n} kwa wanawake na vijana wa Kakuma.",
 };
 
 const fr = {
@@ -580,6 +614,23 @@ const fr = {
   "donate.summary.oneTime": "en don unique",
   "donate.summary.monthly": "chaque mois",
   "donate.cta": "Faire un don",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "Choisissez votre projet",
+  "donate.project.subtitle": "Décidez où va votre don — nous affichons l'impact en direct.",
+  "donate.project.poultry.label": "Élevage avicole",
+  "donate.project.poultry.tagline": "Aliments, vaccins, poussins",
+  "donate.project.tailoring.label": "Couture & Mode",
+  "donate.project.tailoring.tagline": "Kits de couture & uniformes",
+  "donate.project.agribusiness.label": "Agro-business durable",
+  "donate.project.agribusiness.tagline": "Arbres & potagers",
+  "donate.project.training.label": "Formation & Entrepreneuriat",
+  "donate.project.training.tagline": "Cohortes, mentors, outils",
+  "donate.impact.title": "Votre impact",
+  "donate.impact.poultry": "Votre don fournit aliments et vaccins pour {n} poussins.",
+  "donate.impact.tailoring": "Votre don fournit {n} kits de couture aux apprenants.",
+  "donate.impact.agribusiness": "Votre don permet de planter {n} arbres fruitiers biologiques.",
+  "donate.impact.entrepreneurship": "Votre don finance {n} sessions de formation pour entrepreneurs en herbe.",
+  "donate.impact.general": "Votre don offre {n} repas aux femmes et jeunes de Kakuma.",
 };
 
 const es = {
@@ -765,6 +816,23 @@ const es = {
   "donate.summary.oneTime": "como donación única",
   "donate.summary.monthly": "cada mes",
   "donate.cta": "Donar ahora",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "Elige tu proyecto",
+  "donate.project.subtitle": "Decide a dónde va tu donación — vemos el impacto al instante.",
+  "donate.project.poultry.label": "Avícola",
+  "donate.project.poultry.tagline": "Alimento, vacunas, pollitos",
+  "donate.project.tailoring.label": "Costura y Moda",
+  "donate.project.tailoring.tagline": "Kits de costura y uniformes",
+  "donate.project.agribusiness.label": "Agronegocio sostenible",
+  "donate.project.agribusiness.tagline": "Árboles y huertos",
+  "donate.project.training.label": "Formación y Emprendimiento",
+  "donate.project.training.tagline": "Cohortes, mentores, herramientas",
+  "donate.impact.title": "Tu impacto",
+  "donate.impact.poultry": "Tu donación aporta alimento y vacunas a {n} pollitos.",
+  "donate.impact.tailoring": "Tu donación entrega {n} kits de costura a aprendices.",
+  "donate.impact.agribusiness": "Tu donación permite plantar {n} árboles frutales orgánicos.",
+  "donate.impact.entrepreneurship": "Tu donación financia {n} sesiones de formación para emprendedores.",
+  "donate.impact.general": "Tu donación ofrece {n} comidas a mujeres y jóvenes de Kakuma.",
 };
 
 const ar = {
@@ -948,6 +1016,23 @@ const ar = {
   "donate.summary.oneTime": "تبرع لمرة واحدة",
   "donate.summary.monthly": "كل شهر",
   "donate.cta": "تبرّع الآن",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "اختر مشروعك",
+  "donate.project.subtitle": "حدد وجهة تبرعك — سنعرض الأثر فوراً.",
+  "donate.project.poultry.label": "تربية الدواجن",
+  "donate.project.poultry.tagline": "علف، لقاحات وصغار",
+  "donate.project.tailoring.label": "الخياطة والأزياء",
+  "donate.project.tailoring.tagline": "أطقم خياطة وأزياء مدرسية",
+  "donate.project.agribusiness.label": "أعمال زراعية مستدامة",
+  "donate.project.agribusiness.tagline": "أشجار وحدائق منزلية",
+  "donate.project.training.label": "التدريب وريادة الأعمال",
+  "donate.project.training.tagline": "دفعات، موجهون، أدوات",
+  "donate.impact.title": "أثرك",
+  "donate.impact.poultry": "تبرعك يوفر علفاً ولقاحات لـ {n} صغير دجاج.",
+  "donate.impact.tailoring": "تبرعك يقدم {n} أطقم خياطة للمتدربات.",
+  "donate.impact.agribusiness": "تبرعك يساعد في زراعة {n} شجرة فواكه عضوية.",
+  "donate.impact.entrepreneurship": "تبرعك يموّل {n} جلسة تدريبية لرواد أعمال طامحين.",
+  "donate.impact.general": "تبرعك يوفر {n} وجبة لنساء وشباب كاكوما.",
 };
 
 const zh = {
@@ -1129,6 +1214,23 @@ const zh = {
   "donate.summary.oneTime": "作为一次性捐款",
   "donate.summary.monthly": "每月",
   "donate.cta": "立即捐款",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "选择你关注的项目",
+  "donate.project.subtitle": "决定捐赠流向——实时查看影响。",
+  "donate.project.poultry.label": "家禽养殖",
+  "donate.project.poultry.tagline": "饲料、疫苗与雏鸡",
+  "donate.project.tailoring.label": "裁缝与时装",
+  "donate.project.tailoring.tagline": "缝纫包与校服",
+  "donate.project.agribusiness.label": "可持续农业",
+  "donate.project.agribusiness.tagline": "果树与厨房菜园",
+  "donate.project.training.label": "培训与创业",
+  "donate.project.training.tagline": "期数、导师、工具",
+  "donate.impact.title": "你的影响力",
+  "donate.impact.poultry": "你的捐赠为 {n} 只雏鸡提供饲料与疫苗。",
+  "donate.impact.tailoring": "你的捐赠为学员提供 {n} 个缝纫包。",
+  "donate.impact.agribusiness": "你的捐赠帮助种植 {n} 棵有机果树。",
+  "donate.impact.entrepreneurship": "你的捐赠资助 {n} 场面向创业者的培训课。",
+  "donate.impact.general": "你的捐赠为卡库马的妇女与青年提供 {n} 顿饭。",
 };
 
 const pt = {
@@ -1314,6 +1416,23 @@ const pt = {
   "donate.summary.oneTime": "como donativo único",
   "donate.summary.monthly": "todos os meses",
   "donate.cta": "Doar agora",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "Escolhe o teu projeto",
+  "donate.project.subtitle": "Decide para onde vai o donativo — mostramos o impacto ao vivo.",
+  "donate.project.poultry.label": "Avícola",
+  "donate.project.poultry.tagline": "Ração, vacinas e pintos",
+  "donate.project.tailoring.label": "Costura & Moda",
+  "donate.project.tailoring.tagline": "Kits de costura e fardas",
+  "donate.project.agribusiness.label": "Agronegócio sustentável",
+  "donate.project.agribusiness.tagline": "Árvores e hortas",
+  "donate.project.training.label": "Formação & Empreendedorismo",
+  "donate.project.training.tagline": "Cohorts, mentores, ferramentas",
+  "donate.impact.title": "O teu impacto",
+  "donate.impact.poultry": "O teu donativo dá ração e vacinas a {n} pintos.",
+  "donate.impact.tailoring": "O teu donativo entrega {n} kits de costura aos formandos.",
+  "donate.impact.agribusiness": "O teu donativo planta {n} árvores de fruto orgânicas.",
+  "donate.impact.entrepreneurship": "O teu donativo financia {n} sessões de formação para empreendedores.",
+  "donate.impact.general": "O teu donativo oferece {n} refeições a mulheres e jovens de Kakuma.",
 };
 
 const de = {
@@ -1499,6 +1618,23 @@ const de = {
   "donate.summary.oneTime": "als einmalige Spende",
   "donate.summary.monthly": "jeden Monat",
   "donate.cta": "Jetzt spenden",
+  // ---- Project selector + dynamic impact ----
+  "donate.project.title": "Wähle deinen Projekt-Fokus",
+  "donate.project.subtitle": "Bestimme, wohin deine Spende geht — wir zeigen die Wirkung live.",
+  "donate.project.poultry.label": "Geflügelzucht",
+  "donate.project.poultry.tagline": "Futter, Impfstoffe & Küken",
+  "donate.project.tailoring.label": "Schneiderei & Mode",
+  "donate.project.tailoring.tagline": "Nähkits & Uniformen",
+  "donate.project.agribusiness.label": "Nachhaltige Agrarwirtschaft",
+  "donate.project.agribusiness.tagline": "Bäume & Gemüsegärten",
+  "donate.project.training.label": "Training & Unternehmertum",
+  "donate.project.training.tagline": "Kurse, Mentoren, Werkzeuge",
+  "donate.impact.title": "Deine Wirkung",
+  "donate.impact.poultry": "Deine Spende liefert Futter und Impfstoffe für {n} Küken.",
+  "donate.impact.tailoring": "Deine Spende stellt {n} Nähkits für Auszubildende bereit.",
+  "donate.impact.agribusiness": "Deine Spende pflanzt {n} biologische Obstbäume.",
+  "donate.impact.entrepreneurship": "Deine Spende finanziert {n} Trainingseinheiten für angehende Unternehmer.",
+  "donate.impact.general": "Deine Spende sichert {n} Mahlzeiten für Frauen und Jugendliche in Kakuma.",
 };
 
 export const TRANSLATIONS = {

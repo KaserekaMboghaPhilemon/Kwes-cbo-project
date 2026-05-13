@@ -29,6 +29,7 @@ import CurrencySelector, {
   formatMoney,
 } from "./CurrencySelector";
 import SmartAmountInput from "./SmartAmountInput";
+import ProjectSelector, { computeImpactText } from "./ProjectSelector";
 
 // ---------------------------------------------------------------------------
 const fadeUp = {
@@ -206,6 +207,36 @@ const Donate = () => {
                     </p>
                   </div>
                 </div>
+
+                {/* ---- Project selector ---- */}
+                <ProjectSelector
+                  value={project}
+                  onChange={setProject}
+                  className="mt-8"
+                />
+
+                {/* ---- Dynamic Impact Text ---- */}
+                <motion.div
+                  key={`${project || "general"}-${tier === "custom" ? Number(custom) || 0 : tier}`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="mt-6 flex items-start gap-3 rounded-2xl bg-orange-50 p-4 ring-1 ring-orange-200 dark:bg-orange-950/30 dark:ring-orange-900/40"
+                >
+                  <Sparkles className="mt-0.5 h-5 w-5 flex-shrink-0 text-safety-orange" />
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-widest text-safety-orange">
+                      {t("donate.impact.title")}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-orange-900 dark:text-orange-100">
+                      {computeImpactText(
+                        tier === "custom" ? Number(custom) || 0 : tier,
+                        project,
+                        t
+                      )}
+                    </p>
+                  </div>
+                </motion.div>
 
                 {/* ---- Payment methods ---- */}
                 <div className="mt-10">
