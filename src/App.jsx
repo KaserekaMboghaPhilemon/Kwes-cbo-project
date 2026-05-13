@@ -13,6 +13,7 @@ import Gallery from "./components/Gallery";
 import Donation from "../pages/Donation";
 import VocationalHub from "../app/components/VocationalHub";
 import DonationPage from "../app/components/DonationPage";
+import Donate from "../app/components/Donate";
 import News from "../app/components/News";
 import Partnership from "../app/components/Partnership";
 import WhatsAppFAB from "./components/WhatsAppFAB";
@@ -40,7 +41,7 @@ const App = () => {
               <Route path="/programs" element={<Programs />} />
               <Route path="/impact" element={<Impact />} />
               <Route path="/vocational-hub" element={<VocationalHub />} />
-              <Route path="/donate" element={<DonationPage />} />
+              <Route path="/donate" element={<Donate />} />
               <Route path="/news" element={<News />} />
               <Route path="/partnership" element={<Partnership />} />
               <Route path="/contact" element={<Contact />} />
