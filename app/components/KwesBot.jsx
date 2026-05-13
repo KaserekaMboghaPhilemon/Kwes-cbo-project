@@ -1,296 +1,421 @@
 // =============================================================================
 //  KWES — KwesBot.jsx
 // -----------------------------------------------------------------------------
-//  Floating, witty rule-based assistant.
-//  • Bubble fixed bottom-RIGHT (the WhatsApp FAB owns bottom-left).
-//  • Click → spring-animated chat panel.
-//  • Knowledge base: poultry, tailoring, bakery, training, mission, contact,
-//    location, hours, donate. Anything else → "Hahaha 🤣 …" + a hard CTA to
-//    /donate so out-of-scope curiosity still feeds the cause.
+//  Floating, witty rule-based assistant for the KWES site.
 //
-//  Drop-in usage:
-//      import KwesBot from "./components/KwesBot";
-//      <KwesBot />   // place once near the bottom of <App />
+//    • Circular safety-orange bubble fixed bottom-right.
+//    • Click → framer-motion "pop-in" chat window (bg-white dark:bg-slate-900).
+//    • Local knowledge base routed through t() for 8-language support.
+//    • Quick-question chips inside the panel for instant common answers.
+//    • Out-of-scope defense: any prompt about weather/secrets/passwords or
+//      anything off-mission gets the playful "Hahaha 🤣🤣🤣 I only have eyes
+//      for empowerment!" deflection.
+//
+//  Drop-in usage:  <KwesBot />   — once, near the bottom of <App />.
 // =============================================================================
 
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, Sparkles, Heart } from "lucide-react";
+import {
+  MessageCircle,
+  X,
+  Send,
+  Bot,
+  User as UserIcon,
+  Sparkles,
+} from "lucide-react";
 
-// -----------------------------------------------------------------------------
+import { useLanguage } from "../../src/contexts/LanguageContext";
+
+// =============================================================================
 //  KNOWLEDGE BASE
-//  Each rule = list of trigger keywords + reply (text + optional CTA link).
-//  First rule whose triggers match the user's message wins.
-// -----------------------------------------------------------------------------
-const KB = [
+//  Each topic exposes a list of trigger keywords (lower-case, multi-language)
+//  and a translation key for the bot reply. The first matching topic wins.
+// =============================================================================
+const TOPICS = [
   {
     id: "greet",
-    triggers: ["hi", "hello", "hey", "habari", "jambo", "bonjour", "hola"],
-    reply:
-      "Hello! I'm KWES-Bot 🤖. Ask me about our **poultry**, **tailoring**, **bakery**, **training** or **mission**.",
+    triggers: [
+      "hi", "hello", "hey", "yo",
+      "habari", "jambo", "salama",
+      "bonjour", "salut",
+      "hola", "buenas",
+      "مرحبا", "السلام",
+      "你好", "您好",
+      "ola", "olá",
+      "hallo", "guten",
+    ],
+    replyKey: "bot.reply.greet",
   },
   {
     id: "poultry",
-    triggers: ["poultry", "chicken", "chickens", "kuku", "eggs", "broiler", "kienyeji", "hen"],
-    reply:
-      "Our poultry program runs improved-kienyeji and broiler flocks at the Kakuma compound. We sell trays of eggs, day-old chicks and live birds — and we train 350+ farmers.",
-    cta: { label: "See poultry products", to: "/products" },
+    triggers: [
+      "poultry", "chicken", "chickens", "egg", "eggs", "broiler", "hen", "chick", "kienyeji",
+      "kuku", "mayai", "vifaranga",
+      "poulet", "œuf", "oeuf", "volaille",
+      "pollo", "huevo", "huevos",
+      "دجاج", "بيض",
+      "鸡", "蛋",
+      "frango", "ovo", "ovos",
+      "huhn", "ei", "eier",
+    ],
+    replyKey: "bot.reply.poultry",
   },
   {
     id: "tailoring",
-    triggers: ["tailoring", "tailor", "sewing", "garment", "uniform", "fashion", "kitenge", "ankara"],
-    reply:
-      "The KWES tailoring workshop produces school uniforms and custom Ankara garments — and trains a new cohort of women every quarter.",
-    cta: { label: "Browse tailoring", to: "/products" },
+    triggers: [
+      "tailor", "tailoring", "sew", "sewing", "fashion", "dress", "uniform", "kitenge", "ankara",
+      "ushonaji", "nguo", "sare",
+      "couture", "couturier", "robe", "uniforme",
+      "costura", "vestido",
+      "خياطة", "ملابس", "زي",
+      "裁缝", "服装", "校服",
+      "costura", "vestido",
+      "schneiderei", "kleid", "uniform",
+    ],
+    replyKey: "bot.reply.tailoring",
   },
   {
     id: "bakery",
-    triggers: ["bakery", "bread", "cake", "cakes", "bake", "loaf"],
-    reply:
-      "Yes — fresh loaves daily and celebration cakes baked-to-order from the community oven. 48-hour notice for cakes.",
-    cta: { label: "Order from the bakery", to: "/products" },
-  },
-  {
-    id: "training",
-    triggers: ["training", "workshop", "cohort", "learn", "class", "school"],
-    reply:
-      "We run weekend tailoring workshops and 8-week agribusiness cohorts. Certificate awarded on completion.",
-    cta: { label: "View training", to: "/products" },
-  },
-  {
-    id: "mission",
-    triggers: ["mission", "vision", "about", "kwes", "cbo", "who", "what is", "purpose"],
-    reply:
-      "KWES (Kakuma Women Empowerment Society) is a Community-Based Organisation building dignified livelihoods for women and youth in Turkana West, through poultry, tailoring, bakery and vocational training.",
-    cta: { label: "Read our story", to: "/about" },
-  },
-  {
-    id: "contact",
-    triggers: ["contact", "email", "phone", "reach", "call", "whatsapp", "message"],
-    reply:
-      "You can email **info@kwes.or.ke**, call **+254 700 000 000**, or use the contact form.",
-    cta: { label: "Open contact page", to: "/contact" },
-  },
-  {
-    id: "location",
-    triggers: ["where", "location", "address", "kakuma", "turkana", "map"],
-    reply:
-      "We're at KWES CBO, Kakuma, Turkana West Sub-County, Kenya. The contact page has a live map.",
-    cta: { label: "Find us", to: "/contact" },
-  },
-  {
-    id: "hours",
-    triggers: ["hours", "open", "time", "when"],
-    reply:
-      "The compound is staffed Mon–Sat, 8:00 to 17:00 EAT. Sundays we rest 🌿.",
+    triggers: [
+      "bakery", "bread", "cake", "cakes", "oven", "baking",
+      "mkate", "keki",
+      "boulangerie", "pain", "gâteau",
+      "panadería", "pan", "pastel",
+      "خبز", "مخبز", "كعك",
+      "面包", "蛋糕", "烘焙",
+      "padaria", "pão", "bolo",
+      "bäckerei", "brot", "kuchen",
+    ],
+    replyKey: "bot.reply.bakery",
   },
   {
     id: "donate",
-    triggers: ["donate", "give", "support", "fund", "help", "money", "contribution"],
-    reply:
-      "Every shilling reaches the women and youth of Kakuma — 100% transparent.",
-    cta: { label: "Open donation page", to: "/donate" },
+    triggers: [
+      "donate", "donation", "give", "support", "fund", "contribute",
+      "toa", "changia", "msaada",
+      "don", "donner", "soutenir",
+      "donar", "donación", "apoyar",
+      "تبرع", "تبرّع", "دعم",
+      "捐", "捐款", "支持",
+      "doar", "donativo", "apoiar",
+      "spende", "spenden", "unterstützen",
+    ],
+    replyKey: "bot.reply.donate",
   },
   {
-    id: "thanks",
-    triggers: ["thanks", "thank you", "asante", "merci", "gracias"],
-    reply: "Anytime 💚 — and tell a friend about KWES while you're here!",
+    id: "products",
+    triggers: [
+      "buy", "order", "shop", "price", "products", "product",
+      "agiza", "nunua", "bei",
+      "acheter", "commander", "prix",
+      "comprar", "pedir", "precio",
+      "اشتري", "اطلب", "السعر",
+      "购买", "下单", "价格",
+      "comprar", "encomenda", "preço",
+      "kaufen", "bestellen", "preis",
+    ],
+    replyKey: "bot.reply.products",
+  },
+  {
+    id: "contact",
+    triggers: [
+      "contact", "phone", "email", "whatsapp", "reach",
+      "wasiliana", "simu", "barua",
+      "contacter", "téléphone", "courriel",
+      "contacto", "teléfono", "correo",
+      "اتصل", "هاتف", "بريد",
+      "联系", "电话", "邮箱",
+      "contato", "telefone", "e-mail",
+      "kontakt", "telefon", "e-mail",
+    ],
+    replyKey: "bot.reply.contact",
+  },
+  {
+    id: "mission",
+    triggers: [
+      "mission", "vision", "about", "who", "what is kwes", "story",
+      "dhamira", "kuhusu",
+      "mission", "vision", "qui",
+      "misión", "visión", "quién",
+      "مهمة", "رؤية", "من",
+      "使命", "愿景", "关于",
+      "missão", "visão", "quem",
+      "mission", "vision", "wer",
+    ],
+    replyKey: "bot.reply.mission",
   },
 ];
 
-// Out-of-scope / "secret" trigger words → witty deflect.
-const SECRET_TRIGGERS = [
-  "secret", "password", "hack", "admin", "boss", "salary", "ceo",
-  "bitcoin", "crypto", "ai", "joke", "love", "marry", "girlfriend",
-  "boyfriend", "weather", "politics", "trump", "president",
+// ---- Out-of-scope guard ----------------------------------------------------
+//  Any of these terms instantly trigger the witty deflection — even if a
+//  legitimate keyword is buried in the same sentence.
+const OFF_LIMITS = [
+  "password", "passwords", "secret", "secrets", "hack", "exploit",
+  "weather", "rain", "temperature", "forecast",
+  "joke", "politic", "war", "crypto", "bitcoin", "stock",
+  "neno la siri", "siri", "hali ya hewa",
+  "météo", "secret", "mot de passe",
+  "clima", "tiempo", "contraseña", "secreto",
+  "كلمة المرور", "سر", "طقس",
+  "天气", "密码", "秘密",
+  "tempo", "senha", "segredo",
+  "wetter", "passwort", "geheim",
 ];
 
-const FALLBACK_REPLY = {
-  text:
-    "Hahaha 🤣 🤣 🤣 I only have eyes for empowerment! Why not check out our Poultry project instead?",
-  cta: { label: "See the Poultry project", to: "/products" },
+// =============================================================================
+//  CORE MATCHER
+// =============================================================================
+const matchTopic = (raw) => {
+  const text = (raw || "").toLowerCase().trim();
+  if (!text) return null;
+  if (OFF_LIMITS.some((w) => text.includes(w))) return { id: "deflect" };
+  const found = TOPICS.find((t) => t.triggers.some((k) => text.includes(k.toLowerCase())));
+  return found || { id: "fallback" };
 };
 
-// -----------------------------------------------------------------------------
-//  Match engine — case-insensitive, whole-word-ish includes.
-// -----------------------------------------------------------------------------
-const findReply = (raw) => {
-  const msg = (raw || "").toLowerCase();
-  if (!msg.trim()) return FALLBACK_REPLY;
+// =============================================================================
+//  QUICK QUESTION CHIPS
+//  i18n keys are resolved at render time.
+// =============================================================================
+const QUICK = [
+  { id: "help",     promptKey: "bot.quick.help",     text: "How can I help KWES?" },
+  { id: "bakery",   promptKey: "bot.quick.bakery",   text: "Where is the bakery?" },
+  { id: "poultry",  promptKey: "bot.quick.poultry",  text: "Tell me about poultry." },
+  { id: "donate",   promptKey: "bot.quick.donate",   text: "How do I donate?" },
+];
 
-  if (SECRET_TRIGGERS.some((t) => msg.includes(t))) return FALLBACK_REPLY;
-
-  for (const rule of KB) {
-    if (rule.triggers.some((t) => msg.includes(t))) {
-      return { text: rule.reply, cta: rule.cta };
-    }
-  }
-  return FALLBACK_REPLY;
-};
-
-// -----------------------------------------------------------------------------
+// =============================================================================
+//  COMPONENT
+// =============================================================================
 const KwesBot = () => {
-  const [open, setOpen]   = useState(false);
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      from: "bot",
-      text:
-        "Hi! I'm **KWES-Bot** 🤖 — ask me about poultry, tailoring, bakery, training, or our mission. (Off-topic? I'll redirect you somewhere far more useful 😉)",
-    },
-  ]);
-  const listRef = useRef(null);
+  const { t } = useLanguage();
 
-  // auto-scroll
+  const [open,     setOpen]     = useState(false);
+  const [draft,    setDraft]    = useState("");
+  const [messages, setMessages] = useState([]);
+  const scrollRef = useRef(null);
+
+  // ---- Seed greeting on first open ----------------------------------------
   useEffect(() => {
-    if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
+    if (open && messages.length === 0) {
+      setMessages([
+        { from: "bot", id: crypto.randomUUID(), text: t("bot.reply.greet") },
+      ]);
+    }
+  }, [open, messages.length, t]);
+
+  // ---- Auto-scroll on new message -----------------------------------------
+  useEffect(() => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, open]);
 
-  const send = (e) => {
-    e?.preventDefault();
-    const text = input.trim();
-    if (!text) return;
-    const reply = findReply(text);
-
-    setMessages((m) => [
-      ...m,
-      { from: "user", text },
-      { from: "bot",  text: reply.text, cta: reply.cta },
-    ]);
-    setInput("");
+  // ---- Resolve a topic id → translated bot reply --------------------------
+  const replyFor = (topicId) => {
+    if (topicId === "deflect")  return t("bot.reply.deflect");
+    if (topicId === "fallback") return t("bot.reply.fallback");
+    const topic = TOPICS.find((x) => x.id === topicId);
+    return topic ? t(topic.replyKey) : t("bot.reply.fallback");
   };
 
+  // ---- Send pipeline -------------------------------------------------------
+  const sendMessage = (raw) => {
+    const text = (raw || "").trim();
+    if (!text) return;
+
+    const userMsg = { from: "user", id: crypto.randomUUID(), text };
+    setMessages((m) => [...m, userMsg]);
+    setDraft("");
+
+    // Small "typing" delay for warmth.
+    const topic = matchTopic(text);
+    window.setTimeout(() => {
+      const botMsg = {
+        from: "bot",
+        id: crypto.randomUUID(),
+        text: replyFor(topic?.id || "fallback"),
+      };
+      setMessages((m) => [...m, botMsg]);
+    }, 380);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    sendMessage(draft);
+  };
+
+  // ---- Quick chip click ----------------------------------------------------
+  const onQuick = (q) => sendMessage(t(q.promptKey) || q.text);
+
+  // -------------------------------------------------------------------------
+  //  RENDER
+  // -------------------------------------------------------------------------
   return (
     <>
-      {/* ---- Launcher bubble ---- */}
+      {/* ============================ BUBBLE ============================ */}
       <motion.button
         type="button"
-        onClick={() => setOpen(true)}
-        aria-label="Open KWES-Bot"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 320, damping: 22, delay: 0.6 }}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-[900] inline-flex h-14 w-14 items-center justify-center rounded-full bg-forest-green text-white shadow-xl ring-2 ring-safety-orange ring-offset-2 ring-offset-white transition hover:bg-emerald-800 dark:ring-offset-slate-950"
+        aria-label={t("bot.open")}
+        onClick={() => setOpen((v) => !v)}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.07 }}
+        whileTap={{ scale: 0.94 }}
+        transition={{ type: "spring", stiffness: 260, damping: 18 }}
+        className="fixed bottom-6 right-6 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-safety-orange text-white shadow-2xl shadow-orange-500/40 ring-4 ring-safety-orange/30 transition hover:bg-orange-600 sm:h-16 sm:w-16"
       >
-        <Bot className="h-6 w-6" />
-        <span className="absolute -right-1 -top-1 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-safety-orange ring-2 ring-white dark:ring-slate-950">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-safety-orange/60" />
-        </span>
+        <AnimatePresence mode="wait" initial={false}>
+          {open ? (
+            <motion.span
+              key="x"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <X className="h-6 w-6 sm:h-7 sm:w-7" />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="chat"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <MessageCircle className="h-6 w-6 sm:h-7 sm:w-7" />
+            </motion.span>
+          )}
+        </AnimatePresence>
       </motion.button>
 
-      {/* ---- Chat panel ---- */}
+      {/* ========================== CHAT PANEL ========================== */}
       <AnimatePresence>
         {open && (
-          <motion.aside
+          <motion.div
+            key="panel"
+            initial={{ opacity: 0, y: 24, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0,  scale: 1    }}
+            exit   ={{ opacity: 0, y: 24, scale: 0.94 }}
+            transition={{ type: "spring", stiffness: 320, damping: 26 }}
             role="dialog"
-            aria-label="KWES-Bot chat"
-            initial={{ opacity: 0, y: 24, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0,  scale: 1 }}
-            exit={{    opacity: 0, y: 24, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 320, damping: 28 }}
-            className="fixed bottom-24 right-6 z-[950] flex h-[70vh] max-h-[560px] w-[calc(100vw-3rem)] max-w-sm flex-col overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700"
+            aria-label={t("bot.title")}
+            className="fixed bottom-24 right-4 z-50 flex max-h-[80vh] w-[22rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700 sm:right-6"
           >
             {/* Header */}
-            <header className="flex items-center justify-between gap-3 bg-forest-green px-4 py-3 text-white">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-safety-orange/20 ring-1 ring-safety-orange/40">
-                  <Bot className="h-4 w-4 text-safety-orange" />
-                </span>
-                <div>
-                  <p className="text-sm font-extrabold leading-tight">KWES-Bot</p>
-                  <p className="text-[11px] text-white/80">Online · usually witty</p>
-                </div>
+            <div className="flex items-center gap-3 bg-gradient-to-br from-forest-green to-emerald-800 px-4 py-3 text-white">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-safety-orange ring-2 ring-white/30">
+                <Bot className="h-5 w-5" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-extrabold leading-tight">
+                  {t("bot.title")}
+                </p>
+                <p className="text-[11px] uppercase tracking-widest text-white/80">
+                  <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-300 align-middle" />
+                  {t("bot.status")}
+                </p>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close chat"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition hover:bg-white/25"
+                aria-label={t("bot.close")}
+                className="rounded-full p-1.5 text-white/85 transition hover:bg-white/15 hover:text-white"
               >
                 <X className="h-4 w-4" />
               </button>
-            </header>
+            </div>
 
             {/* Messages */}
             <div
-              ref={listRef}
-              className="flex-1 space-y-3 overflow-y-auto bg-slate-50 px-4 py-4 dark:bg-slate-950"
+              ref={scrollRef}
+              className="flex-1 space-y-3 overflow-y-auto bg-slate-50 px-3 py-4 dark:bg-slate-950"
             >
-              {messages.map((m, i) => (
-                <Bubble key={i} from={m.from} text={m.text} cta={m.cta} onCtaClick={() => setOpen(false)} />
+              {messages.map((m) => (
+                <Bubble key={m.id} from={m.from} text={m.text} />
               ))}
+            </div>
+
+            {/* Quick chips */}
+            <div className="border-t border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900">
+              <p className="mb-2 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-safety-orange">
+                <Sparkles className="h-3 w-3" />
+                {t("bot.quick.title")}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {QUICK.map((q) => (
+                  <button
+                    key={q.id}
+                    type="button"
+                    onClick={() => onQuick(q)}
+                    className="rounded-full bg-orange-50 px-3 py-1.5 text-xs font-bold text-orange-600 ring-1 ring-orange-200 transition hover:bg-safety-orange hover:text-white hover:ring-safety-orange dark:bg-orange-950/30 dark:text-orange-300 dark:ring-orange-900/40 dark:hover:bg-safety-orange dark:hover:text-white"
+                  >
+                    {t(q.promptKey)}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Composer */}
             <form
-              onSubmit={send}
-              className="flex items-center gap-2 border-t border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900"
+              onSubmit={onSubmit}
+              className="flex items-center gap-2 border-t border-slate-200 bg-white px-3 py-3 dark:border-slate-700 dark:bg-slate-900"
             >
               <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about poultry, tailoring, …"
-                className="flex-1 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm outline-none transition focus:border-safety-orange focus:ring-2 focus:ring-safety-orange/30 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
+                type="text"
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                placeholder={t("bot.placeholder")}
+                aria-label={t("bot.placeholder")}
+                className="flex-1 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder-slate-400 outline-none ring-safety-orange/30 transition focus:ring-2 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
               />
               <button
                 type="submit"
-                aria-label="Send"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-safety-orange text-white shadow-md transition hover:scale-105 hover:bg-orange-600"
+                aria-label={t("bot.send")}
+                className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-safety-orange text-white shadow-md transition hover:scale-105 hover:bg-orange-600"
               >
                 <Send className="h-4 w-4" />
               </button>
             </form>
-          </motion.aside>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 };
 
-// -----------------------------------------------------------------------------
-//  Bubble — renders **bold** segments, an optional CTA Link, and aligns by sender.
-// -----------------------------------------------------------------------------
-const renderRich = (text) =>
-  text.split(/(\*\*[^*]+\*\*)/g).map((chunk, i) =>
-    chunk.startsWith("**") && chunk.endsWith("**") ? (
-      <strong key={i} className="font-extrabold">{chunk.slice(2, -2)}</strong>
-    ) : (
-      <span key={i}>{chunk}</span>
-    )
-  );
-
-const Bubble = ({ from, text, cta, onCtaClick }) => {
+// =============================================================================
+//  Bubble — message row.
+// =============================================================================
+const Bubble = ({ from, text }) => {
   const isBot = from === "bot";
   return (
-    <div className={`flex ${isBot ? "justify-start" : "justify-end"}`}>
-      <div
-        className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className={`flex items-end gap-2 ${isBot ? "" : "flex-row-reverse"}`}
+    >
+      <span
+        className={`mb-0.5 inline-flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full ${
           isBot
-            ? "rounded-bl-sm bg-white text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:ring-slate-700"
-            : "rounded-br-sm bg-safety-orange text-white"
+            ? "bg-forest-green text-white"
+            : "bg-safety-orange/15 text-safety-orange"
         }`}
       >
-        <p>{renderRich(text)}</p>
-
-        {cta && (
-          <Link
-            to={cta.to}
-            onClick={onCtaClick}
-            className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-forest-green px-3 py-1.5 text-xs font-extrabold text-white shadow transition hover:bg-emerald-800"
-          >
-            {cta.to === "/donate" ? (
-              <Heart className="h-3.5 w-3.5" />
-            ) : (
-              <Sparkles className="h-3.5 w-3.5" />
-            )}
-            {cta.label}
-          </Link>
-        )}
-      </div>
-    </div>
+        {isBot ? <Bot className="h-3.5 w-3.5" /> : <UserIcon className="h-3.5 w-3.5" />}
+      </span>
+      <p
+        className={`max-w-[78%] whitespace-pre-line rounded-2xl px-3.5 py-2 text-sm leading-relaxed shadow-sm ${
+          isBot
+            ? "bg-white text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:ring-slate-700"
+            : "bg-safety-orange text-white"
+        }`}
+      >
+        {text}
+      </p>
+    </motion.div>
   );
 };
 

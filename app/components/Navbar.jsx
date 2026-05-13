@@ -39,6 +39,7 @@ const NAV_ITEMS = [
   { to: "/about",       key: "nav.about" },
   { to: "/programs",    key: "nav.programs" },
   { to: "/partnership", key: "nav.partnership" },
+  { to: "/products",    key: "nav.products" },
   { to: "/news",        key: "nav.news" },
   { to: "/contact",     key: "nav.contact" },
 ];

@@ -16,7 +16,9 @@ import DonationPage from "../app/components/DonationPage";
 import Donate from "../app/components/Donate";
 import News from "../app/components/News";
 import Partnership from "../app/components/Partnership";
+import Products from "../app/components/Products";
 import WhatsAppFAB from "./components/WhatsAppFAB";
+import KwesBot from "../app/components/KwesBot";
 
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -44,6 +46,7 @@ const App = () => {
               <Route path="/donate" element={<Donate />} />
               <Route path="/news" element={<News />} />
               <Route path="/partnership" element={<Partnership />} />
+              <Route path="/products" element={<Products />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/gallery" element={<Gallery />} />
             </Routes>
@@ -51,6 +54,7 @@ const App = () => {
 
           <Footer />
           <WhatsAppFAB />
+          <KwesBot />
         </Router>
       </LanguageProvider>
     </ThemeProvider>
