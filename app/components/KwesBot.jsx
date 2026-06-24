@@ -268,6 +268,9 @@ const QUICK = [
   { id: "donate",   promptKey: "bot.quick.donate",   text: "How do I donate?" },
 ];
 
+const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+const apiUrl = (path) => `${apiBase}${path}`;
+
 // =============================================================================
 //  COMPONENT
 // =============================================================================
@@ -285,7 +288,7 @@ const KwesBot = () => {
   useEffect(() => {
     if (!open || aiOnline !== null) return;
     let cancelled = false;
-    fetch("/api/health")
+    fetch(apiUrl("/api/health"))
       .then((r) => r.ok ? r.json() : Promise.reject(r.status))
       .then((d) => { if (!cancelled) setAiOnline(Boolean(d?.ok && d?.key)); })
       .catch(()  => { if (!cancelled) setAiOnline(false); });
@@ -316,7 +319,7 @@ const KwesBot = () => {
   };
 
   // ---- Send pipeline -------------------------------------------------------
-  //  1. Try the OpenAI-powered /api/chat proxy (the "Deep Brain").
+  //  1. Try the backend /api/chat proxy (the "Deep Brain").
   //  2. On any failure (offline, no key, rate limit), gracefully fall back to
   //     the local rule-based knowledge base so the bot never goes silent.
   // -------------------------------------------------------------------------
@@ -359,7 +362,7 @@ const KwesBot = () => {
     let reply = null;
     let usedFallback = false;
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch(apiUrl("/api/chat"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text, language, history }),
