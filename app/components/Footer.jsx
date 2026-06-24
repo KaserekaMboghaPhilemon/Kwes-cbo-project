@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MessageCircle, Facebook, Instagram, Twitter } from "lucide-react";
 import { useLanguage } from "../../src/contexts/LanguageContext";
+import whatsappIcon from "../../src/Images/whatsapp.png";
+import twitterIcon from "../../src/Images/twitter.png";
+import instagramIcon from "../../src/Images/instagram.png";
+import linkedinIcon from "../../src/Images/linkedin (1).png";
+import tiktokIcon from "../../src/Images/tiktok.png";
 import "./Footer.css";
 
 const Footer = () => {
@@ -19,17 +23,20 @@ const Footer = () => {
             </p>
             {/* Social Links */}
             <div className="mt-6 flex items-center gap-4">
-              <a href="https://wa.me/254140401128" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="text-2xl text-gray-400 hover:text-green-400 transition duration-300">
-                <MessageCircle size={24} />
+              <a href="https://wa.me/254140401128" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="hover:opacity-75 transition duration-300">
+                <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" />
               </a>
-              <a href="https://facebook.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Facebook" className="text-2xl text-gray-400 hover:text-blue-400 transition duration-300">
-                <Facebook size={24} />
+              <a href="https://twitter.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Twitter" className="hover:opacity-75 transition duration-300">
+                <img src={twitterIcon} alt="Twitter" className="h-6 w-6" />
               </a>
-              <a href="https://twitter.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Twitter" className="text-2xl text-gray-400 hover:text-sky-400 transition duration-300">
-                <Twitter size={24} />
+              <a href="https://instagram.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Instagram" className="hover:opacity-75 transition duration-300">
+                <img src={instagramIcon} alt="Instagram" className="h-6 w-6" />
               </a>
-              <a href="https://instagram.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Instagram" className="text-2xl text-gray-400 hover:text-pink-400 transition duration-300">
-                <Instagram size={24} />
+              <a href="https://linkedin.com/company/kwescbo" target="_blank" rel="noopener noreferrer" title="LinkedIn" className="hover:opacity-75 transition duration-300">
+                <img src={linkedinIcon} alt="LinkedIn" className="h-6 w-6" />
+              </a>
+              <a href="https://tiktok.com/@kwescbo" target="_blank" rel="noopener noreferrer" title="TikTok" className="hover:opacity-75 transition duration-300">
+                <img src={tiktokIcon} alt="TikTok" className="h-6 w-6" />
               </a>
             </div>
           </div>
