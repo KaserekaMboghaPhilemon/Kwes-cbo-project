@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <!-- Background -->
+  <rect width="192" height="192" fill="#1f2937" rx="40"/>
+  
+  <!-- KWES Branding - Stylized W for Women Empowerment -->
+  <g>
+    <!-- Left peak -->
+    <path d="M 40 80 L 55 40 L 65 80 Z" fill="#FF6D00" opacity="0.9"/>
+    <!-- Middle dip -->
+    <path d="M 65 80 L 75 50 L 85 80 Z" fill="#FF6D00"/>
+    <!-- Right peak -->
+    <path d="M 85 80 L 100 40 L 115 80 Z" fill="#FF6D00" opacity="0.9"/>
+    <!-- Far right -->
+    <path d="M 115 80 L 128 50 L 145 80 Z" fill="#FF6D00"/>
+    
+    <!-- Bottom connection -->
+    <path d="M 40 80 Q 96 140 145 80" stroke="#FF6D00" stroke-width="8" fill="none" stroke-linecap="round"/>
+    
+    <!-- Center dot - circle of unity -->
+    <circle cx="96" cy="110" r="12" fill="#FF6D00"/>
+  </g>
+  
+  <!-- Text: KWES -->
+  <text x="96" y="155" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FF6D00" text-anchor="middle" letter-spacing="2">KWES</text>
+</svg>

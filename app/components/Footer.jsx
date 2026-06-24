@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { MessageCircle, Facebook, Instagram, Twitter } from "lucide-react";
 import { useLanguage } from "../../src/contexts/LanguageContext";
 import "./Footer.css";
 
@@ -18,17 +19,17 @@ const Footer = () => {
             </p>
             {/* Social Links */}
             <div className="mt-6 flex items-center gap-4">
-              <a href="https://wa.me/254140401128" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="text-2xl hover:text-green-400 transition">
-                💬
+              <a href="https://wa.me/254140401128" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="text-2xl text-gray-400 hover:text-green-400 transition duration-300">
+                <MessageCircle size={24} />
               </a>
-              <a href="https://facebook.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Facebook" className="text-2xl hover:text-blue-400 transition">
-                👍
+              <a href="https://facebook.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Facebook" className="text-2xl text-gray-400 hover:text-blue-400 transition duration-300">
+                <Facebook size={24} />
               </a>
-              <a href="https://twitter.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Twitter" className="text-2xl hover:text-sky-400 transition">
-                🐦
+              <a href="https://twitter.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Twitter" className="text-2xl text-gray-400 hover:text-sky-400 transition duration-300">
+                <Twitter size={24} />
               </a>
-              <a href="https://instagram.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Instagram" className="text-2xl hover:text-pink-400 transition">
-                📸
+              <a href="https://instagram.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Instagram" className="text-2xl text-gray-400 hover:text-pink-400 transition duration-300">
+                <Instagram size={24} />
               </a>
             </div>
           </div>
