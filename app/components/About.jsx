@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
@@ -12,6 +12,7 @@ import {
   Mail,
   ArrowRight,
 } from "lucide-react";
+import { useLanguage } from "../../src/contexts/LanguageContext";
 
 import storyImg from "../../src/Images/crowd-broilers-fed.jpg";
 import storyImg2 from "../../src/Images/women-cleaning2.jpg";
@@ -22,28 +23,28 @@ import compoundImg from "../../src/Images/compound-view.jpg";
 const VALUES = [
   {
     icon: Sprout,
-    title: "Empowerment",
-    text: "Equipping women and youth with skills, capital, and confidence to author their own futures.",
+    titleKey: "aboutPage.values.empowerment.title",
+    textKey: "aboutPage.values.empowerment.text",
   },
   {
     icon: Recycle,
-    title: "Sustainability",
-    text: "Programs that fund themselves — turning aid into equity and beneficiaries into owners.",
+    titleKey: "aboutPage.values.sustainability.title",
+    textKey: "aboutPage.values.sustainability.text",
   },
   {
     icon: ShieldCheck,
-    title: "Integrity",
-    text: "Audited, transparent, accountable — every shilling tracked from donor to beneficiary.",
+    titleKey: "aboutPage.values.integrity.title",
+    textKey: "aboutPage.values.integrity.text",
   },
   {
     icon: Users2,
-    title: "Community Collaboration",
-    text: "Built by Kakuma, for Kakuma — co-designed with the people we serve.",
+    titleKey: "aboutPage.values.community.title",
+    textKey: "aboutPage.values.community.text",
   },
   {
     icon: Lightbulb,
-    title: "Innovation",
-    text: "Modern agribusiness models, digital literacy, and circular economies for camp realities.",
+    titleKey: "aboutPage.values.innovation.title",
+    textKey: "aboutPage.values.innovation.text",
   },
 ];
 
@@ -51,32 +52,32 @@ const VALUES = [
 const FOUNDERS = [
   {
     name: "Uwineza Jemima.",
-    role: "Co-Founder & Director",
-    bio: "Champion of women's economic empowerment, leading KWES strategy and partnerships.",
+    roleKey: "aboutPage.founders.uwineza.role",
+    bioKey: "aboutPage.founders.uwineza.bio",
     image: founderImg,
   },
   {
     name: "Mama Adasa.",
-    role: "Co-Founder & Programs Lead",
-    bio: "Drives the poultry and micro-enterprise tracks, mentoring new cohorts of women entrepreneurs.",
+    roleKey: "aboutPage.founders.adasa.role",
+    bioKey: "aboutPage.founders.adasa.bio",
     image: storyImg,
   },
   {
     name: "Grace N.",
-    role: "Co-Founder & Finance",
-    bio: "Owns financial discipline, reporting, and donor transparency across all KWES initiatives.",
+    roleKey: "aboutPage.founders.grace.role",
+    bioKey: "aboutPage.founders.grace.bio",
     image: storyImg2,
   },
   {
     name: "Esther M.",
-    role: "Co-Founder & Training",
-    bio: "Designs literacy and vocational curricula for women and youth across the camp.",
+    roleKey: "aboutPage.founders.esther.role",
+    bioKey: "aboutPage.founders.esther.bio",
     image: compoundImg,
   },
   {
     name: "Joyce L.",
-    role: "Co-Founder & Community",
-    bio: "Builds cooperative governance and grassroots mobilization in Kakuma host communities.",
+    roleKey: "aboutPage.founders.joyce.role",
+    bioKey: "aboutPage.founders.joyce.bio",
     image: founderImg,
   },
 ];
@@ -92,6 +93,8 @@ const fadeUp = {
 
 /* =================================================================== */
 const About = () => {
+  const { t } = useLanguage();
+
   const heroRef = useRef(null);
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
@@ -113,34 +116,25 @@ const About = () => {
             className="lg:col-span-7"
           >
             <span className="inline-block text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs mb-6">
-              About KWES — Est. 2025
+              {t("aboutPage.hero.badge")}
             </span>
 
             <h1
               className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-[#004d40]"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              Born from{" "}
-              <span className="italic text-[#ff6d00]">Lived</span>
+              {t("aboutPage.hero.titleLine1")}{" "}
+              <span className="italic text-[#ff6d00]">{t("aboutPage.hero.titleAccent")}</span>
               <br />
-              Experience.
+              {t("aboutPage.hero.titleLine2")}
             </h1>
 
             <div className="mt-10 max-w-xl space-y-5 text-lg text-gray-600 leading-relaxed">
               <p>
-                In <span className="font-semibold text-[#004d40]">February 2025</span>,
-                five women in Kakuma sat together and refused to accept that
-                vulnerability was a permanent address. They pooled their lived
-                experience, their networks, and their conviction — and KWES was
-                born.
+                {t("aboutPage.hero.p1")}
               </p>
               <p>
-                What began around a single table is now a community-led organization
-                advancing economic empowerment through{" "}
-                <span className="font-semibold text-[#004d40]">
-                  sustainable agriculture, skills development, and micro-enterprise support
-                </span>
-                .
+                {t("aboutPage.hero.p2")}
               </p>
             </div>
 
@@ -150,14 +144,14 @@ const About = () => {
                   <img
                     key={i}
                     src={src}
-                    alt=""
+                    alt={t("aboutPage.hero.stackAlt")}
                     className="w-12 h-12 rounded-full ring-4 ring-white object-cover"
                   />
                 ))}
               </div>
               <div>
-                <div className="font-bold text-[#004d40]">5 Founding Women</div>
-                <div className="text-sm text-gray-500">Kakuma, Turkana West</div>
+                <div className="font-bold text-[#004d40]">{t("aboutPage.hero.foundingWomen")}</div>
+                <div className="text-sm text-gray-500">{t("aboutPage.hero.location")}</div>
               </div>
             </div>
           </motion.div>
@@ -185,7 +179,7 @@ const About = () => {
             >
               <img
                 src={storyImg}
-                alt="KWES founding women collaborating in Kakuma"
+                alt={t("aboutPage.hero.mainImageAlt")}
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -200,7 +194,7 @@ const About = () => {
             >
               <img
                 src={compoundImg}
-                alt="The KWES community compound in Kakuma"
+                alt={t("aboutPage.hero.compoundAlt")}
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -214,7 +208,7 @@ const About = () => {
             >
               <Quote size={20} className="text-[#ff6d00] mb-2" />
               <p className="text-sm leading-snug font-medium">
-                Five women. One conviction. A community rewriting its future.
+                {t("aboutPage.hero.quote")}
               </p>
             </motion.div>
           </div>
@@ -230,15 +224,15 @@ const About = () => {
             viewport={{ once: true }}
           >
             <span className="inline-block text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs mb-6">
-              Positioning Statement
+              {t("aboutPage.positioning.badge")}
             </span>
             <p
               className="font-serif text-3xl md:text-5xl font-bold leading-tight text-[#004d40]"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              KWES is a community-led organization advancing
-              <span className="italic"> economic empowerment </span>
-              through sustainable agriculture, skills development, and micro-enterprise support.
+              {t("aboutPage.positioning.text1")}
+              <span className="italic"> {t("aboutPage.positioning.textAccent")} </span>
+              {t("aboutPage.positioning.text2")}
             </p>
           </motion.div>
         </div>
@@ -254,14 +248,14 @@ const About = () => {
             className="mb-14"
           >
             <span className="text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs">
-              Mission & Vision
+              {t("aboutPage.mv.badge")}
             </span>
             <h2
               className="font-serif text-4xl md:text-6xl font-bold mt-3 leading-tight text-[#004d40]"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              Why we exist.<br />
-              <span className="italic text-[#ff6d00]">Where we're going.</span>
+              {t("aboutPage.mv.title1")}<br />
+              <span className="italic text-[#ff6d00]">{t("aboutPage.mv.title2")}</span>
             </h2>
           </motion.div>
 
@@ -277,15 +271,13 @@ const About = () => {
               <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-[#ff6d00]/15 blur-2xl" />
               <div className="relative">
                 <span className="inline-block text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs mb-5">
-                  01 — Our Mission
+                  {t("aboutPage.mission.badge")}
                 </span>
                 <h3 className="text-3xl md:text-4xl font-bold leading-tight mb-5">
-                  To empower women and youth through sustainable livelihood programs.
+                  {t("aboutPage.mission.title")}
                 </h3>
                 <p className="text-green-50/85 leading-relaxed">
-                  Hands-on training, seed capital, and market access — we equip
-                  beneficiaries with everything they need to convert skills into
-                  durable household income.
+                  {t("aboutPage.mission.body")}
                 </p>
               </div>
             </motion.article>
@@ -301,15 +293,13 @@ const About = () => {
               <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-[#004d40]/5 blur-2xl" />
               <div className="relative">
                 <span className="inline-block text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs mb-5">
-                  02 — Our Vision
+                  {t("aboutPage.vision.badge")}
                 </span>
                 <h3 className="text-3xl md:text-4xl font-bold leading-tight mb-5 text-[#004d40]">
-                  A self-reliant community where women and youth have equal access to opportunities.
+                  {t("aboutPage.vision.title")}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  A Kakuma where livelihoods are built — not handed out — and where
-                  every cohort of beneficiaries graduates into the next generation of
-                  community leaders.
+                  {t("aboutPage.vision.body")}
                 </p>
               </div>
             </motion.article>
@@ -327,20 +317,20 @@ const About = () => {
             className="text-center mb-14"
           >
             <span className="text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs">
-              What We Stand For
+              {t("aboutPage.values.badge")}
             </span>
             <h2
               className="font-serif text-4xl md:text-6xl font-bold mt-3 leading-tight text-[#004d40]"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              Our <span className="italic">core values</span>
+              {t("aboutPage.values.title1")} <span className="italic">{t("aboutPage.values.title2")}</span>
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-            {VALUES.map(({ icon: Icon, title, text }, i) => (
+            {VALUES.map(({ icon: Icon, titleKey, textKey }, i) => (
               <motion.div
-                key={title}
+                key={titleKey}
                 variants={fadeUp}
                 custom={i}
                 initial="hidden"
@@ -351,8 +341,8 @@ const About = () => {
                 <div className="w-12 h-12 rounded-xl bg-[#004d40]/10 text-[#004d40] flex items-center justify-center mb-5 group-hover:bg-[#004d40] group-hover:text-white transition">
                   <Icon size={22} />
                 </div>
-                <h3 className="font-bold text-lg text-[#004d40] mb-2">{title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+                <h3 className="font-bold text-lg text-[#004d40] mb-2">{t(titleKey)}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{t(textKey)}</p>
               </motion.div>
             ))}
           </div>
@@ -370,18 +360,17 @@ const About = () => {
           >
             <div>
               <span className="text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs">
-                Leadership
+                {t("aboutPage.leadership.badge")}
               </span>
               <h2
                 className="font-serif text-4xl md:text-6xl font-bold mt-3 leading-tight text-[#004d40]"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
               >
-                The five who <span className="italic">started it all</span>
+                {t("aboutPage.leadership.title1")} <span className="italic">{t("aboutPage.leadership.title2")}</span>
               </h2>
             </div>
             <p className="text-gray-600 max-w-md">
-              The KWES founding team — community organizers, mothers, and entrepreneurs
-              who chose to build the institution they wished had existed for them.
+              {t("aboutPage.leadership.subtitle")}
             </p>
           </motion.div>
 
@@ -399,32 +388,30 @@ const About = () => {
                 <div className="relative aspect-[3/4] rounded-3xl overflow-hidden mb-4 ring-1 ring-black/5">
                   <img
                     src={f.image}
-                    alt={`${f.name}, ${f.role} at KWES`}
+                    alt={`${f.name}, ${t(f.roleKey)} at KWES`}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#004d40]/85 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-500" />
                   <div className="absolute inset-x-4 bottom-4 flex gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition duration-500">
-                    <a
-                      href="#"
+                    <button
+                      type="button"
                       className="w-9 h-9 rounded-full bg-white/95 text-[#004d40] flex items-center justify-center hover:bg-[#ff6d00] hover:text-white transition"
-                      aria-label={`${f.name} profile`}
+                      aria-label={`${f.name} ${t("aboutPage.leadership.profileAria")}`}
                     >
                       <AtSign size={16} />
-                    </a>
-                    <a
-                      href="#"
+                    </button>
+                    <button
+                      type="button"
                       className="w-9 h-9 rounded-full bg-white/95 text-[#004d40] flex items-center justify-center hover:bg-[#ff6d00] hover:text-white transition"
-                      aria-label={`Email ${f.name}`}
+                      aria-label={`${t("aboutPage.leadership.emailAria")} ${f.name}`}
                     >
                       <Mail size={16} />
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <h3 className="font-bold text-lg text-[#004d40] leading-tight">{f.name}</h3>
-                <p className="text-xs font-semibold tracking-wide uppercase text-[#ff6d00] mb-2">
-                  {f.role}
-                </p>
-                <p className="text-sm text-gray-600 leading-relaxed">{f.bio}</p>
+                <p className="text-xs font-semibold tracking-wide uppercase text-[#ff6d00] mb-2">{t(f.roleKey)}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{t(f.bioKey)}</p>
               </motion.article>
             ))}
           </div>
@@ -443,24 +430,23 @@ const About = () => {
               className="font-serif text-4xl md:text-6xl font-bold leading-tight"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              Become part of the <span className="italic text-[#ff6d00]">next chapter</span>.
+              {t("aboutPage.cta.title1")} <span className="italic text-[#ff6d00]">{t("aboutPage.cta.title2")}</span>.
             </h2>
             <p className="mt-6 text-green-50/90 text-lg max-w-2xl mx-auto">
-              Whether you fund a cohort, mentor a founder, or share our work — every
-              act compounds the impact KWES delivers in Kakuma.
+              {t("aboutPage.cta.subtitle")}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/donate"
                 className="inline-flex items-center justify-center gap-2 bg-[#ff6d00] hover:bg-[#e65f00] text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg shadow-orange-900/30"
               >
-                Support Our Work <ArrowRight size={18} />
+                {t("btn.support")} <ArrowRight size={18} />
               </a>
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-white text-white px-8 py-3.5 rounded-full font-semibold transition"
               >
-                Partner With Us
+                {t("btn.partner")}
               </a>
             </div>
           </motion.div>

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -14,6 +14,7 @@ import {
   PlayCircle,
   ArrowRight,
 } from "lucide-react";
+import { useLanguage } from "../../src/contexts/LanguageContext";
 
 /* ---------- Reusable Glass Card ---------- */
 const GlassCard = ({ children, className = "" }) => (
@@ -67,15 +68,14 @@ const VideoPlaceholder = ({ label }) => (
         <PlayCircle size={32} className="text-[#39ff14]" />
       </div>
       <span className="text-xs font-mono tracking-widest text-[#39ff14]/70 uppercase">
-        Program Demonstration
+        {label}
       </span>
-      <span className="text-sm text-gray-500">{label}</span>
     </div>
   </div>
 );
 
 /* ---------- Production Pillar ---------- */
-const Pillar = ({ icon: Icon, eyebrow, title, text, bullets, reverse, videoLabel }) => (
+const Pillar = ({ icon: Icon, eyebrow, title, text, bullets, reverse, videoLabel, ctaLabel }) => (
   <motion.div
     initial="hidden"
     whileInView="show"
@@ -101,7 +101,7 @@ const Pillar = ({ icon: Icon, eyebrow, title, text, bullets, reverse, videoLabel
         href="#contact"
         className="inline-flex items-center gap-2 text-[#39ff14] hover:text-white font-semibold transition group"
       >
-        Learn more <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
+        {ctaLabel} <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
       </a>
     </div>
     <VideoPlaceholder label={videoLabel} />
@@ -109,6 +109,89 @@ const Pillar = ({ icon: Icon, eyebrow, title, text, bullets, reverse, videoLabel
 );
 
 const VocationalHub = () => {
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      icon: GraduationCap,
+      titleKey: "hubPage.steps.training.title",
+      textKey: "hubPage.steps.training.text",
+    },
+    {
+      icon: Factory,
+      titleKey: "hubPage.steps.production.title",
+      textKey: "hubPage.steps.production.text",
+    },
+    {
+      icon: Sprout,
+      titleKey: "hubPage.steps.sustainability.title",
+      textKey: "hubPage.steps.sustainability.text",
+    },
+  ];
+
+  const pillars = [
+    {
+      icon: Egg,
+      eyebrowKey: "hubPage.pillars.poultry.eyebrow",
+      titleKey: "hubPage.pillars.poultry.title",
+      textKey: "hubPage.pillars.poultry.text",
+      bullets: [
+        t("hubPage.pillars.poultry.bullet1"),
+        t("hubPage.pillars.poultry.bullet2"),
+        t("hubPage.pillars.poultry.bullet3"),
+      ],
+      videoLabel: t("hubPage.pillars.poultry.video"),
+    },
+    {
+      reverse: true,
+      icon: Scissors,
+      eyebrowKey: "hubPage.pillars.tailoring.eyebrow",
+      titleKey: "hubPage.pillars.tailoring.title",
+      textKey: "hubPage.pillars.tailoring.text",
+      bullets: [
+        t("hubPage.pillars.tailoring.bullet1"),
+        t("hubPage.pillars.tailoring.bullet2"),
+        t("hubPage.pillars.tailoring.bullet3"),
+      ],
+      videoLabel: t("hubPage.pillars.tailoring.video"),
+    },
+    {
+      icon: Cookie,
+      eyebrowKey: "hubPage.pillars.bakery.eyebrow",
+      titleKey: "hubPage.pillars.bakery.title",
+      textKey: "hubPage.pillars.bakery.text",
+      bullets: [
+        t("hubPage.pillars.bakery.bullet1"),
+        t("hubPage.pillars.bakery.bullet2"),
+        t("hubPage.pillars.bakery.bullet3"),
+      ],
+      videoLabel: t("hubPage.pillars.bakery.video"),
+    },
+  ];
+
+  const empowermentCards = [
+    {
+      icon: Wallet,
+      titleKey: "hubPage.empowerment.financial.title",
+      textKey: "hubPage.empowerment.financial.text",
+    },
+    {
+      icon: Users,
+      titleKey: "hubPage.empowerment.leadership.title",
+      textKey: "hubPage.empowerment.leadership.text",
+    },
+    {
+      icon: BookOpen,
+      titleKey: "hubPage.empowerment.literacy.title",
+      textKey: "hubPage.empowerment.literacy.text",
+    },
+    {
+      icon: Sprout,
+      titleKey: "hubPage.empowerment.mindset.title",
+      textKey: "hubPage.empowerment.mindset.text",
+    },
+  ];
+
   return (
     <div className="bg-[#0a0a0a] text-white min-h-screen">
       {/* Ambient grid + glow */}
@@ -123,7 +206,7 @@ const VocationalHub = () => {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono tracking-widest uppercase border border-[#39ff14]/40 text-[#39ff14] bg-[#39ff14]/5 mb-7"
           >
-            <Sprout size={14} /> KWES Vocational Hub
+            <Sprout size={14} /> {t("hubPage.hero.badge")}
           </motion.span>
 
           <motion.h1
@@ -132,9 +215,9 @@ const VocationalHub = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-7xl font-extrabold leading-[1.05] tracking-tight max-w-4xl mx-auto"
           >
-            Sustainable Skills,{" "}
+            {t("hubPage.hero.title1")}{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#39ff14] to-emerald-300">
-              Community Growth
+              {t("hubPage.hero.title2")}
             </span>
           </motion.h1>
 
@@ -144,9 +227,7 @@ const VocationalHub = () => {
             transition={{ delay: 0.3 }}
             className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed"
           >
-            A future-forward training ecosystem where women and youth in Kakuma
-            convert practical skills into productive enterprises — and enterprises
-            into long-term self-reliance.
+            {t("hubPage.hero.subtitle")}
           </motion.p>
 
           <motion.div
@@ -159,13 +240,13 @@ const VocationalHub = () => {
               href="#pillars"
               className="inline-flex items-center justify-center gap-2 bg-[#39ff14] text-black hover:bg-white px-8 py-3.5 rounded-full font-bold transition shadow-[0_0_30px_-5px_#39ff14]"
             >
-              Explore Programs <ArrowRight size={18} />
+              {t("btn.explorePrograms")} <ArrowRight size={18} />
             </a>
             <a
               href="#contact"
               className="inline-flex items-center justify-center gap-2 border border-[#39ff14]/40 hover:border-[#39ff14] text-white px-8 py-3.5 rounded-full font-semibold backdrop-blur transition"
             >
-              Partner With Us
+              {t("btn.partner")}
             </a>
           </motion.div>
         </div>
@@ -181,10 +262,10 @@ const VocationalHub = () => {
             className="text-center mb-14"
           >
             <span className="text-[#39ff14] font-mono text-xs tracking-widest uppercase">
-              The Flow
+              {t("hubPage.flow.badge")}
             </span>
             <h2 className="text-3xl md:text-5xl font-extrabold mt-3">
-              From classroom to community independence
+              {t("hubPage.flow.title")}
             </h2>
           </motion.div>
 
@@ -197,24 +278,15 @@ const VocationalHub = () => {
             {/* Connector line */}
             <div className="hidden md:block absolute top-1/2 left-[8%] right-[8%] h-px bg-gradient-to-r from-transparent via-[#39ff14]/30 to-transparent -translate-y-1/2" />
 
-            <Step
-              index={0}
-              icon={GraduationCap}
-              title="Training"
-              text="Hands-on skills development in poultry, baking, tailoring, financial literacy and leadership."
-            />
-            <Step
-              index={1}
-              icon={Factory}
-              title="Production"
-              text="Beneficiaries turn skills into output — bread, tailored garments, eggs and poultry — sold to real markets."
-            />
-            <Step
-              index={2}
-              icon={Sprout}
-              title="Sustainability"
-              text="Revenue is reinvested into the next cohort, building self-reliant cooperatives that outlive any grant."
-            />
+            {steps.map((step, i) => (
+              <Step
+                key={step.titleKey}
+                index={i}
+                icon={step.icon}
+                title={t(step.titleKey)}
+                text={t(step.textKey)}
+              />
+            ))}
           </motion.div>
         </div>
       </section>
@@ -229,53 +301,27 @@ const VocationalHub = () => {
             className="max-w-2xl mb-16"
           >
             <span className="text-[#39ff14] font-mono text-xs tracking-widest uppercase">
-              Production Pillars
+              {t("hubPage.pillars.badge")}
             </span>
             <h2 className="text-3xl md:text-5xl font-extrabold mt-3">
-              Three engines of household income
+              {t("hubPage.pillars.title")}
             </h2>
           </motion.div>
 
           <div className="space-y-24">
-            <Pillar
-              icon={Egg}
-              eyebrow="Pillar 01"
-              title="Poultry Farming"
-              text="Improved kienyeji chicken value-chains — from biosecure housing to feed formulation, vaccination, and market access. Each cooperative becomes a local protein hub for Kakuma."
-              bullets={[
-                "1000+ chickens raised across women-led cooperatives",
-                "Daily egg supply to schools, kiosks, and NGOs",
-                "Vet-supported health & feed protocols",
-              ]}
-              videoLabel="Poultry farm walkthrough"
-            />
-
-            <Pillar
-              reverse
-              icon={Scissors}
-              eyebrow="Pillar 02"
-              title="Tailoring & Fashion"
-              text="From sewing-machine literacy to pattern-making and finished apparel — KWES trains women and youth to fulfill school-uniform contracts and design-led fashion lines."
-              bullets={[
-                "Industrial & domestic machine training",
-                "School uniform & household textile contracts",
-                "Design-led fashion track for value-added apparel",
-              ]}
-              videoLabel="Tailoring workshop demo"
-            />
-
-            <Pillar
-              icon={Cookie}
-              eyebrow="Pillar 03"
-              title="Artisanal Bread Making"
-              text="A commercial micro-bakery program: bread, mandazi, and pastry production with daily-demand margins — anchored by hygiene, costing, and inventory discipline."
-              bullets={[
-                "Daily-demand goods with reliable cash flow",
-                "Hygiene, food-safety & cost-control training",
-                "Local distribution to schools and shops",
-              ]}
-              videoLabel="Bakery production line"
-            />
+            {pillars.map((pillar) => (
+              <Pillar
+                key={pillar.titleKey}
+                reverse={pillar.reverse}
+                icon={pillar.icon}
+                eyebrow={t(pillar.eyebrowKey)}
+                title={t(pillar.titleKey)}
+                text={t(pillar.textKey)}
+                bullets={pillar.bullets}
+                videoLabel={pillar.videoLabel}
+                ctaLabel={t("btn.learnMore")}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -295,43 +341,20 @@ const VocationalHub = () => {
               <div className="relative grid lg:grid-cols-3 gap-10">
                 <div className="lg:col-span-1">
                   <span className="text-[#39ff14] font-mono text-xs tracking-widest uppercase">
-                    Empowerment Focus
+                    {t("hubPage.empowerment.badge")}
                   </span>
                   <h2 className="text-3xl md:text-4xl font-extrabold mt-3 leading-tight">
-                    Training & Empowerment
+                    {t("hubPage.empowerment.title")}
                   </h2>
                   <p className="text-gray-400 mt-4 leading-relaxed">
-                    Skills alone don't build sovereignty — financial literacy, leadership,
-                    and confidence do. This is the operating system behind every KWES
-                    enterprise.
+                    {t("hubPage.empowerment.subtitle")}
                   </p>
                 </div>
 
                 <div className="lg:col-span-2 grid sm:grid-cols-2 gap-5">
-                  {[
-                    {
-                      icon: Wallet,
-                      title: "Financial Literacy",
-                      text: "Budgeting, saving, costing, and access to micro-credit — so beneficiaries grow capital, not just income.",
-                    },
-                    {
-                      icon: Users,
-                      title: "Leadership",
-                      text: "Cooperative governance, conflict resolution, and public speaking — building leaders, not employees.",
-                    },
-                    {
-                      icon: BookOpen,
-                      title: "Functional Literacy",
-                      text: "Reading, writing, and numeracy that unlock contracts, banking, and digital tools.",
-                    },
-                    {
-                      icon: Sprout,
-                      title: "Mindset & Resilience",
-                      text: "Goal-setting and entrepreneurial confidence to navigate the realities of camp economies.",
-                    },
-                  ].map(({ icon: Icon, title, text }, i) => (
+                  {empowermentCards.map(({ icon: Icon, titleKey, textKey }, i) => (
                     <motion.div
-                      key={title}
+                      key={titleKey}
                       variants={fadeUp}
                       custom={i}
                       className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#39ff14]/40 transition"
@@ -339,8 +362,8 @@ const VocationalHub = () => {
                       <div className="w-10 h-10 rounded-lg bg-[#39ff14]/10 ring-1 ring-[#39ff14]/40 flex items-center justify-center text-[#39ff14] mb-3">
                         <Icon size={18} />
                       </div>
-                      <h4 className="font-bold mb-1">{title}</h4>
-                      <p className="text-sm text-gray-400 leading-relaxed">{text}</p>
+                      <h4 className="font-bold mb-1">{t(titleKey)}</h4>
+                      <p className="text-sm text-gray-400 leading-relaxed">{t(textKey)}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -359,23 +382,23 @@ const VocationalHub = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
-              Fund a skill. Power a livelihood.
+              {t("hubPage.cta.title")}
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-              Sponsor a cohort, donate equipment, or co-design a new track with KWES.
+              {t("hubPage.cta.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 bg-[#39ff14] text-black hover:bg-white px-8 py-3.5 rounded-full font-bold transition shadow-[0_0_30px_-5px_#39ff14]"
               >
-                Support a Cohort <ArrowRight size={18} />
+                {t("hubPage.cta.primary")} <ArrowRight size={18} />
               </a>
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 border border-[#39ff14]/40 hover:border-[#39ff14] text-white px-8 py-3.5 rounded-full font-semibold transition"
               >
-                Become a Partner
+                {t("hubPage.cta.secondary")}
               </a>
             </div>
           </motion.div>

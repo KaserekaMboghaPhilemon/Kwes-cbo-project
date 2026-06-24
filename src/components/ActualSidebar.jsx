@@ -32,10 +32,12 @@ const ActualSidebar = () => {
 
       {/* Sidebar Overlay */}
       {isOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+        <button
+          type="button"
+          aria-label="Close menu"
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 cursor-default"
           onClick={() => setIsOpen(false)}
-        ></div>
+        />
       )}
 
       {/* Sidebar */}

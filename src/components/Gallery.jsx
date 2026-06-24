@@ -13,6 +13,7 @@ import {
   Sparkles,
   Building2,
 } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 import featureImg from "../Images/improved-kienyeji.jpg";
 import poultryImg from "../Images/improved-kienyeji.jpg";
@@ -26,44 +27,44 @@ import communityImg from "../Images/compound-view.jpg";
 const CATEGORIES = [
   {
     icon: Egg,
-    title: "Poultry Production",
-    stat: "1000+ Chickens Raised",
-    text: "Improved kienyeji flocks managed by women cooperatives — daily protein, daily income.",
+    titleKey: "galleryPage.categories.poultry.title",
+    statKey: "galleryPage.categories.poultry.stat",
+    textKey: "galleryPage.categories.poultry.text",
     image: poultryImg,
   },
   {
     icon: Scissors,
-    title: "Tailoring & Fashion",
-    stat: "Vocational Training",
-    text: "Sewing, pattern-making, and design — turning skills into school-uniform contracts.",
+    titleKey: "galleryPage.categories.tailoring.title",
+    statKey: "galleryPage.categories.tailoring.stat",
+    textKey: "galleryPage.categories.tailoring.text",
     image: tailoringImg,
   },
   {
     icon: Cookie,
-    title: "Artisanal Bakery",
-    stat: "Daily Bread Production",
-    text: "Bread, mandazi, and pastry production for the Kakuma community.",
+    titleKey: "galleryPage.categories.bakery.title",
+    statKey: "galleryPage.categories.bakery.stat",
+    textKey: "galleryPage.categories.bakery.text",
     image: bakeryImg,
   },
   {
     icon: Briefcase,
-    title: "Entrepreneurship Training",
-    stat: "32+ Women Empowered",
-    text: "Financial literacy, costing, and business mentorship for women founders.",
+    titleKey: "galleryPage.categories.entrepreneurship.title",
+    statKey: "galleryPage.categories.entrepreneurship.stat",
+    textKey: "galleryPage.categories.entrepreneurship.text",
     image: entrepreneurImg,
   },
   {
     icon: GraduationCap,
-    title: "Youth Engagement",
-    stat: "50+ Youth Trained",
-    text: "Skills tracks and leadership pathways for the next generation in Kakuma.",
+    titleKey: "galleryPage.categories.youth.title",
+    statKey: "galleryPage.categories.youth.stat",
+    textKey: "galleryPage.categories.youth.text",
     image: youthImg,
   },
   {
     icon: Users,
-    title: "Community Impact",
-    stat: "500+ Families Supported",
-    text: "Every cohort ripples outward — feeding, employing, and uplifting the camp.",
+    titleKey: "galleryPage.categories.community.title",
+    statKey: "galleryPage.categories.community.stat",
+    textKey: "galleryPage.categories.community.text",
     image: communityImg,
   },
 ];
@@ -80,6 +81,7 @@ const fadeUp = {
 };
 
 const Gallery = () => {
+  const { t } = useLanguage();
   const [active, setActive] = useState(null);
 
   return (
@@ -95,7 +97,7 @@ const Gallery = () => {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-[0.25em] uppercase border border-[#ff6d00]/40 text-[#ff6d00] bg-[#ff6d00]/10 mb-7"
           >
-            <Sparkles size={14} /> Gallery & Projects
+            <Sparkles size={14} /> {t("galleryPage.hero.badge")}
           </motion.span>
 
           <motion.h1
@@ -104,7 +106,7 @@ const Gallery = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight max-w-4xl mx-auto"
           >
-            Our Gallery <span className="text-[#ff6d00]">in Action</span>
+            {t("galleryPage.hero.title1")} <span className="text-[#ff6d00]">{t("galleryPage.hero.title2")}</span>
           </motion.h1>
 
           <motion.p
@@ -113,8 +115,7 @@ const Gallery = () => {
             transition={{ delay: 0.3 }}
             className="mt-6 text-lg text-white/70 max-w-2xl mx-auto leading-relaxed"
           >
-            Witness the tangible impact of our poultry, tailoring, and food
-            production initiatives in Kakuma.
+            {t("galleryPage.hero.subtitle")}
           </motion.p>
 
           <motion.div
@@ -127,13 +128,13 @@ const Gallery = () => {
               href="#projects"
               className="inline-flex items-center justify-center gap-2 bg-[#ff6d00] hover:bg-[#e65f00] text-white px-8 py-3.5 rounded-full font-bold transition shadow-2xl shadow-orange-900/40"
             >
-              Explore Projects <ArrowRight size={18} />
+              {t("galleryPage.hero.primaryCta")} <ArrowRight size={18} />
             </a>
             <a
               href="/donate"
               className="inline-flex items-center justify-center gap-2 border border-white/30 hover:border-white text-white px-8 py-3.5 rounded-full font-semibold backdrop-blur transition"
             >
-              Support Our Work
+              {t("btn.support")}
             </a>
           </motion.div>
         </div>
@@ -157,14 +158,14 @@ const Gallery = () => {
               <span className="w-3 h-3 rounded-full bg-yellow-400/70" />
               <span className="w-3 h-3 rounded-full bg-green-400/70" />
               <div className="ml-4 px-3 py-1 rounded-md bg-white/5 text-[11px] text-white/50 font-mono tracking-wider">
-                kwes.org / gallery / poultry-program
+                {t("galleryPage.feature.path")}
               </div>
             </div>
 
             <div className="relative aspect-video bg-black">
               <img
                 src={featureImg}
-                alt="KWES poultry program highlight — women raising improved kienyeji chickens in Kakuma"
+                alt={t("galleryPage.feature.imageAlt")}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -172,7 +173,7 @@ const Gallery = () => {
               {/* Play overlay */}
               <button
                 type="button"
-                aria-label="Play featured highlight video"
+                aria-label={t("galleryPage.feature.playAria")}
                 className="group absolute inset-0 flex items-center justify-center"
               >
                 <span className="absolute w-24 h-24 rounded-full bg-[#ff6d00]/30 animate-ping" />
@@ -185,15 +186,15 @@ const Gallery = () => {
               <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                 <div>
                   <span className="inline-block text-[11px] font-bold tracking-[0.25em] uppercase text-[#ff6d00] mb-2">
-                    Featured Highlight
+                    {t("galleryPage.feature.badge")}
                   </span>
                   <h2 className="text-2xl md:text-3xl font-extrabold text-white max-w-xl">
-                    Inside the KWES Poultry Program
+                    {t("galleryPage.feature.title")}
                   </h2>
                 </div>
                 <div className="flex items-center gap-5 text-white/80 text-sm">
-                  <span className="flex items-center gap-2"><Egg size={16} className="text-[#ff6d00]" /> 1000+ chickens</span>
-                  <span className="flex items-center gap-2"><Users size={16} className="text-[#ff6d00]" /> 32+ women</span>
+                  <span className="flex items-center gap-2"><Egg size={16} className="text-[#ff6d00]" /> {t("galleryPage.feature.stat1")}</span>
+                  <span className="flex items-center gap-2"><Users size={16} className="text-[#ff6d00]" /> {t("galleryPage.feature.stat2")}</span>
                 </div>
               </div>
             </div>
@@ -212,15 +213,14 @@ const Gallery = () => {
           >
             <div>
               <span className="text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs">
-                Project Categories
+                {t("galleryPage.categories.badge")}
               </span>
               <h2 className="text-3xl md:text-5xl font-extrabold mt-3 leading-tight text-[#001a33]">
-                Six engines of community impact
+                {t("galleryPage.categories.title")}
               </h2>
             </div>
             <p className="text-gray-600 max-w-md">
-              Every category is a verified initiative — funded, audited, and
-              actively running on the ground in Kakuma.
+              {t("galleryPage.categories.subtitle")}
             </p>
           </motion.div>
 
@@ -230,9 +230,9 @@ const Gallery = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {CATEGORIES.map(({ icon: Icon, title, stat, text, image }, i) => (
+            {CATEGORIES.map(({ icon: Icon, titleKey, statKey, textKey, image }, i) => (
               <motion.article
-                key={title}
+                key={titleKey}
                 variants={fadeUp}
                 custom={i}
                 onMouseEnter={() => setActive(i)}
@@ -243,7 +243,7 @@ const Gallery = () => {
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <img
                     src={image}
-                    alt={`${title} at KWES Kakuma — ${stat}`}
+                    alt={`${t(titleKey)} at KWES Kakuma — ${t(statKey)}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#001a33]/85 via-[#001a33]/30 to-transparent" />
@@ -252,23 +252,23 @@ const Gallery = () => {
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">
                     <span className="inline-block text-[10px] font-bold tracking-[0.25em] uppercase text-[#ff6d00] mb-1">
-                      {stat}
+                      {t(statKey)}
                     </span>
                     <h3 className="text-xl md:text-2xl font-extrabold text-white leading-tight">
-                      {title}
+                      {t(titleKey)}
                     </h3>
                   </div>
                 </div>
 
                 <div className="p-6">
                   <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                    {text}
+                    {t(textKey)}
                   </p>
                   <a
                     href="/programs"
                     className="inline-flex items-center gap-2 text-[#001a33] hover:text-[#ff6d00] font-bold text-sm transition"
                   >
-                    View project
+                    {t("galleryPage.categories.viewProject")}
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition" />
                   </a>
                 </div>
@@ -282,10 +282,10 @@ const Gallery = () => {
       <section className="bg-white px-4 py-16 border-t border-black/5">
         <div className="max-w-container mx-auto text-center">
           <span className="text-xs font-bold tracking-[0.3em] uppercase text-gray-500">
-            Our Partners
+            {t("galleryPage.partners.badge")}
           </span>
           <h2 className="text-2xl md:text-3xl font-extrabold mt-2 mb-10 text-[#001a33]">
-            Trusted by humanitarian leaders
+            {t("galleryPage.partners.title")}
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 items-center">
@@ -315,24 +315,23 @@ const Gallery = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
-              Ready to fund the next frame?
+              {t("galleryPage.cta.title")}
             </h2>
             <p className="text-green-50/85 max-w-2xl mx-auto mb-8">
-              Behind every photo is a woman, a youth, a household — your support
-              makes the next one possible.
+              {t("galleryPage.cta.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/donate"
                 className="inline-flex items-center justify-center gap-2 bg-[#ff6d00] hover:bg-[#e65f00] text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg shadow-orange-900/30"
               >
-                Support Our Work <ArrowRight size={18} />
+                {t("btn.support")} <ArrowRight size={18} />
               </a>
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-white text-white px-8 py-3.5 rounded-full font-semibold transition"
               >
-                Partner With Us
+                {t("btn.partner")}
               </a>
             </div>
           </motion.div>

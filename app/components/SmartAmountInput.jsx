@@ -39,6 +39,7 @@ import { motion } from "framer-motion";
 import { RotateCcw, Sparkles } from "lucide-react";
 
 import { convertFromUSD, formatMoney } from "./CurrencySelector";
+import { useLanguage } from "../../src/contexts/LanguageContext";
 
 // ---------------------------------------------------------------------------
 //  NON-LINEAR SLIDER SCALE
@@ -77,20 +78,20 @@ const usdToPosition = (usd) => {
 //  back to a generic "meals served" unit so the line is never empty.
 // ---------------------------------------------------------------------------
 const IMPACT = {
-  poultry:          { unitUSD: 0.20, unit: "chicks fed for a day" },
-  tailoring:        { unitUSD: 6,    unit: "uniform kits" },
-  bakery:           { unitUSD: 0.50, unit: "fresh loaves" },
-  entrepreneurship: { unitUSD: 25,   unit: "starter toolkits" },
-  training:         { unitUSD: 12,   unit: "training seats" },
-  agribusiness:     { unitUSD: 4,    unit: "seedling packs" },
-  vocational:       { unitUSD: 15,   unit: "workshop hours" },
-  general:          { unitUSD: 1,    unit: "meals served" },
+  poultry:          { unitUSD: 0.20, unitKey: "donate.smart.unit.poultry" },
+  tailoring:        { unitUSD: 6,    unitKey: "donate.smart.unit.tailoring" },
+  bakery:           { unitUSD: 0.50, unitKey: "donate.smart.unit.bakery" },
+  entrepreneurship: { unitUSD: 25,   unitKey: "donate.smart.unit.entrepreneurship" },
+  training:         { unitUSD: 12,   unitKey: "donate.smart.unit.training" },
+  agribusiness:     { unitUSD: 4,    unitKey: "donate.smart.unit.agribusiness" },
+  vocational:       { unitUSD: 15,   unitKey: "donate.smart.unit.vocational" },
+  general:          { unitUSD: 1,    unitKey: "donate.smart.unit.general" },
 };
 
 const computeImpact = (usd, projectId) => {
   const cfg = IMPACT[projectId] ?? IMPACT.general;
   const count = Math.floor((Number(usd) || 0) / cfg.unitUSD);
-  return { count, unit: cfg.unit };
+  return { count, unitKey: cfg.unitKey };
 };
 
 // ===========================================================================
@@ -102,6 +103,7 @@ const SmartAmountInput = ({
   onReset,
   className = "",
 }) => {
+  const { t } = useLanguage();
   const sliderPos = useMemo(() => usdToPosition(amount), [amount]);
 
   const converted = useMemo(
@@ -132,16 +134,16 @@ const SmartAmountInput = ({
       {/* Header strip ---------------------------------------------------- */}
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-xs font-bold uppercase tracking-widest text-safety-orange">
-          Power slider
+          {t("donate.smart.powerSlider")}
         </h3>
         <button
           type="button"
           onClick={onReset}
-          aria-label="Reset amount, currency and project"
+          aria-label={t("donate.smart.resetAria")}
           className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-safety-orange hover:text-safety-orange dark:border-slate-600 dark:text-slate-300"
         >
           <RotateCcw className="h-3.5 w-3.5" />
-          Reset
+          {t("donate.smart.reset")}
         </button>
       </div>
 
@@ -154,7 +156,7 @@ const SmartAmountInput = ({
           step={1}
           value={sliderPos}
           onChange={onSlide}
-          aria-label="Donation amount slider"
+          aria-label={t("donate.smart.sliderAria")}
           className="kwes-power-slider w-full"
           style={{
             background: `linear-gradient(to right, #ff6d00 0%, #ff6d00 ${sliderPos}%, #e2e8f0 ${sliderPos}%, #e2e8f0 100%)`,
@@ -198,7 +200,7 @@ const SmartAmountInput = ({
       {/* ====================== LIVE CONVERSION ====================== */}
       <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-xl bg-forest-green/5 px-4 py-3 ring-1 ring-forest-green/20 dark:bg-forest-green/15 dark:ring-forest-green/40">
         <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">
-          You give
+            {t("donate.summary.giving")}
         </span>
         <motion.span
           key={`${amount}-${currency?.code ?? "USD"}`}
@@ -218,11 +220,11 @@ const SmartAmountInput = ({
       <p className="mt-3 flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
         <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-safety-orange" />
         <span>
-          This amount will support{" "}
+          {t("donate.smart.impactPrefix")}{" "}
           <strong className="font-extrabold text-forest-green dark:text-white">
             {impact.count.toLocaleString()}
           </strong>{" "}
-          {impact.unit}.
+          {t(impact.unitKey)}.
         </span>
       </p>
     </div>

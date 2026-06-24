@@ -195,7 +195,8 @@ const Donation = () => {
                   <h2>Select Payment Method</h2>
                   <div className="payment-methods">
                     {paymentMethods.map(method => (
-                      <div
+                      <button
+                        type="button"
                         key={method.id}
                         className={`payment-method ${selectedPaymentMethod === method.id ? 'active' : ''}`}
                         onClick={() => setSelectedPaymentMethod(method.id)}
@@ -208,7 +209,7 @@ const Donation = () => {
                         <div className="payment-radio">
                           <div className={`radio-circle ${selectedPaymentMethod === method.id ? 'selected' : ''}`}></div>
                         </div>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>

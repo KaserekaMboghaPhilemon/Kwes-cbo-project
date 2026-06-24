@@ -221,11 +221,11 @@ const Contact = () => {
 };
 
 // ---------------------------------------------------------------------------
-const InfoRow = ({ icon: Icon, title, body, href }) => {
+const InfoRow = ({ icon: IconComponent, title, body, href }) => {
   const content = (
     <div className="flex items-start gap-4">
       <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-safety-orange/10 text-safety-orange ring-1 ring-safety-orange/30">
-        <Icon className="h-5 w-5" />
+        <IconComponent className="h-5 w-5" />
       </span>
       <div>
         <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">

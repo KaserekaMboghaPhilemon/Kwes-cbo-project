@@ -48,6 +48,20 @@ const TOPICS = [
     replyKey: "bot.reply.greet",
   },
   {
+    id: "products",
+    triggers: [
+      "get eggs", "get egg", "get ", "buy", "order", "purchase", "shop", "price", "products", "product", "tray", "catalog", "catalogue", "availability",
+      "agiza", "nunua", "bei",
+      "acheter", "commander", "prix",
+      "comprar", "pedir", "precio",
+      "اشتري", "اطلب", "السعر",
+      "购买", "下单", "价格",
+      "encomenda", "preço",
+      "kaufen", "bestellen", "preis",
+    ],
+    replyKey: "bot.reply.products",
+  },
+  {
     id: "poultry",
     triggers: [
       "poultry", "chicken", "chickens", "egg", "eggs", "broiler", "hen", "chick", "kienyeji",
@@ -74,6 +88,20 @@ const TOPICS = [
       "schneiderei", "kleid", "uniform",
     ],
     replyKey: "bot.reply.tailoring",
+  },
+  {
+    id: "agribusiness",
+    triggers: [
+      "agribusiness", "agriculture", "farming", "farm", "crop", "crops", "vegetable", "vegetables", "irrigation", "solar",
+      "kilimo", "shamba", "mboga", "umwagiliaji",
+      "agriculture", "ferme", "culture", "légume", "irrigation",
+      "agricultura", "granja", "cultivo", "verdura", "riego",
+      "زراعة", "مزرعة", "ري", "خضار",
+      "农业", "农场", "灌溉", "蔬菜",
+      "agricultura", "fazenda", "irrigação", "legume",
+      "landwirtschaft", "bauernhof", "bewässerung", "gemüse",
+    ],
+    replyKey: "bot.reply.agribusiness",
   },
   {
     id: "bakery",
@@ -104,20 +132,6 @@ const TOPICS = [
     replyKey: "bot.reply.donate",
   },
   {
-    id: "products",
-    triggers: [
-      "buy", "order", "shop", "price", "products", "product",
-      "agiza", "nunua", "bei",
-      "acheter", "commander", "prix",
-      "comprar", "pedir", "precio",
-      "اشتري", "اطلب", "السعر",
-      "购买", "下单", "价格",
-      "comprar", "encomenda", "preço",
-      "kaufen", "bestellen", "preis",
-    ],
-    replyKey: "bot.reply.products",
-  },
-  {
     id: "contact",
     triggers: [
       "contact", "phone", "email", "whatsapp", "reach",
@@ -145,22 +159,91 @@ const TOPICS = [
     ],
     replyKey: "bot.reply.mission",
   },
+  // ---- CRITICAL-THINKING BRAIN (broad keywords — evaluated AFTER specific) -
+  //  The bot routes any remaining "why / how / what about…" inquiries through
+  //  one of three analytical lenses: economic, environmental, social.
+  // ----------------------------------------------------------------------------
+  {
+    id: "criticalEconomic",
+    triggers: [
+      "why", "reason", "better", "instead",
+      "expensive", "cost", "profit", "sustainable", "market", "business",
+      "kwa nini", "sababu", "bora", "badala",
+      "ghali", "gharama", "faida", "endelevu", "soko", "biashara",
+      "pourquoi", "raison", "meilleur", "au lieu",
+      "cher", "coût", "profit", "durable", "marché", "affaires",
+      "por qué", "razón", "mejor", "en lugar",
+      "caro", "costo", "beneficio", "sostenible", "mercado", "negocio",
+      "لماذا", "سبب", "أفضل", "بدلا",
+      "غالي", "تكلفة", "ربح", "استدام", "سوق", "أعمال",
+      "为什么", "原因", "更好", "而不是",
+      "贵", "成本", "利润", "可持续", "市场", "商业",
+      "porquê", "razão", "melhor", "em vez",
+      "caro", "custo", "lucro", "sustentável", "negócio",
+      "warum", "grund", "besser", "stattdessen",
+      "teuer", "kosten", "gewinn", "nachhaltig", "markt", "geschäft",
+    ],
+    replyKey: "bot.reply.criticalEconomic",
+  },
+  {
+    id: "criticalEnvironment",
+    triggers: [
+      "climate", "water", "land", "dry", "hot", "environment", "location", "turkana", "kakuma",
+      "tabianchi", "hali ya hewa", "maji", "ardhi", "joto", "mazingira",
+      "climat", "eau", "terre", "sec", "chaud", "environnement", "emplacement",
+      "clima", "agua", "tierra", "seco", "caliente", "medio ambiente", "ubicación",
+      "مناخ", "ماء", "أرض", "جاف", "حار", "بيئة", "موقع",
+      "气候", "水", "土地", "干", "热", "环境", "位置",
+      "clima", "água", "terra", "seco", "quente", "ambiente", "localização",
+      "klima", "wasser", "land", "trocken", "heiß", "umwelt", "ort",
+    ],
+    replyKey: "bot.reply.criticalEnvironment",
+  },
+  {
+    id: "criticalSocial",
+    triggers: [
+      "transparency", "money", "track", "trust", "accountability", "audit", "donor",
+      "help", "poor", "youth", "women", "education", "change", "future",
+      "uwazi", "pesa", "fuatilia", "imani", "uwajibikaji",
+      "saidia", "masikini", "vijana", "wanawake", "elimu", "mabadiliko", "wakati ujao",
+      "transparence", "argent", "suivi", "confiance", "redevabilité",
+      "aider", "pauvre", "jeunesse", "femmes", "éducation", "changement", "avenir",
+      "transparencia", "dinero", "rastrear", "confianza", "rendición",
+      "ayuda", "pobre", "juventud", "mujeres", "educación", "cambio", "futuro",
+      "شفافية", "مال", "تتبع", "ثقة", "مساءلة",
+      "ساعد", "فقير", "شباب", "نساء", "تعليم", "تغيير", "مستقبل",
+      "透明", "资金", "追踪", "信任", "问责",
+      "帮助", "贫困", "青年", "妇女", "教育", "改变", "未来",
+      "transparência", "dinheiro", "rastrear", "confiança", "prestação",
+      "ajudar", "pobre", "juventude", "mulheres", "educação", "mudança", "futuro",
+      "transparenz", "geld", "verfolgen", "vertrauen", "rechenschaft",
+      "helfen", "arm", "jugend", "frauen", "bildung", "wandel", "zukunft",
+    ],
+    replyKey: "bot.reply.criticalSocial",
+  },
 ];
 
-// ---- Out-of-scope guard ----------------------------------------------------
-//  Any of these terms instantly trigger the witty deflection — even if a
-//  legitimate keyword is buried in the same sentence.
+//  Note: "weather/climate" are *not* off-limits — they route to the climate
+//  research topic. The guardrail focuses on personal/security probes.
 const OFF_LIMITS = [
-  "password", "passwords", "secret", "secrets", "hack", "exploit",
-  "weather", "rain", "temperature", "forecast",
-  "joke", "politic", "war", "crypto", "bitcoin", "stock",
-  "neno la siri", "siri", "hali ya hewa",
-  "météo", "secret", "mot de passe",
-  "clima", "tiempo", "contraseña", "secreto",
-  "كلمة المرور", "سر", "طقس",
-  "天气", "密码", "秘密",
-  "tempo", "senha", "segredo",
-  "wetter", "passwort", "geheim",
+  "password", "passwords", "secret", "secrets", "hack", "exploit", "admin",
+  "private", "salary", "location details", "hidden", "internal", "strategy",
+  "politic", "politics", "religion", "religious", "tribe", "tribal", "war",
+  "joke", "crypto", "bitcoin", "stock",
+  "neno la siri", "siri", "siasa", "dini", "kabila", "vita",
+  "mshahara", "binafsi", "fiche",
+  "secret", "mot de passe", "politique", "religion", "tribu", "guerre",
+  "privé", "salaire", "caché",
+  "contraseña", "secreto", "política", "religión", "tribu", "guerra",
+  "privado", "salario", "oculto",
+  "كلمة المرور", "سر", "سياسة", "دين", "قبيلة", "حرب",
+  "خاص", "راتب", "مخفي",
+  "密码", "秘密", "政治", "宗教", "部落", "战争",
+  "私人", "薪资", "隐藏",
+  "senha", "segredo", "política", "religião", "tribo", "guerra",
+  "privado", "salário", "oculto",
+  "passwort", "geheim", "politik", "religion", "stamm", "krieg",
+  "privat", "gehalt", "versteckt",
 ];
 
 // =============================================================================
@@ -189,12 +272,25 @@ const QUICK = [
 //  COMPONENT
 // =============================================================================
 const KwesBot = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const [open,     setOpen]     = useState(false);
   const [draft,    setDraft]    = useState("");
   const [messages, setMessages] = useState([]);
+  //  aiOnline:  null = unknown, true = brain reachable, false = fallback mode
+  const [aiOnline, setAiOnline] = useState(null);
   const scrollRef = useRef(null);
+
+  // ---- Health probe on first open -----------------------------------------
+  useEffect(() => {
+    if (!open || aiOnline !== null) return;
+    let cancelled = false;
+    fetch("/api/health")
+      .then((r) => r.ok ? r.json() : Promise.reject(r.status))
+      .then((d) => { if (!cancelled) setAiOnline(Boolean(d?.ok && d?.key)); })
+      .catch(()  => { if (!cancelled) setAiOnline(false); });
+    return () => { cancelled = true; };
+  }, [open, aiOnline]);
 
   // ---- Seed greeting on first open ----------------------------------------
   useEffect(() => {
@@ -220,7 +316,11 @@ const KwesBot = () => {
   };
 
   // ---- Send pipeline -------------------------------------------------------
-  const sendMessage = (raw) => {
+  //  1. Try the OpenAI-powered /api/chat proxy (the "Deep Brain").
+  //  2. On any failure (offline, no key, rate limit), gracefully fall back to
+  //     the local rule-based knowledge base so the bot never goes silent.
+  // -------------------------------------------------------------------------
+  const sendMessage = async (raw) => {
     const text = (raw || "").trim();
     if (!text) return;
 
@@ -228,16 +328,72 @@ const KwesBot = () => {
     setMessages((m) => [...m, userMsg]);
     setDraft("");
 
-    // Small "typing" delay for warmth.
-    const topic = matchTopic(text);
-    window.setTimeout(() => {
-      const botMsg = {
-        from: "bot",
-        id: crypto.randomUUID(),
-        text: replyFor(topic?.id || "fallback"),
-      };
-      setMessages((m) => [...m, botMsg]);
-    }, 380);
+    // Hard guardrail: secrets / off-limits prompts never leave the browser.
+    const localTopic = matchTopic(text);
+    if (localTopic?.id === "deflect") {
+      window.setTimeout(() => {
+        setMessages((m) => [
+          ...m,
+          { from: "bot", id: crypto.randomUUID(), text: replyFor("deflect") },
+        ]);
+      }, 280);
+      return;
+    }
+
+    // Typing indicator
+    const typingId = crypto.randomUUID();
+    setMessages((m) => [
+      ...m,
+      { from: "bot", id: typingId, text: "…", typing: true },
+    ]);
+
+    // Build short conversation history for the LLM (last 3 turns).
+    const history = messages
+      .filter((m) => !m.typing && (m.from === "user" || m.from === "bot"))
+      .slice(-6)
+      .map((m) => ({
+        role: m.from === "user" ? "user" : "assistant",
+        content: m.text,
+      }));
+
+    let reply = null;
+    let usedFallback = false;
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, language, history }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.reply) {
+          reply = data.reply;
+          setAiOnline(true);
+        }
+      } else {
+        const data = await res.json().catch(() => ({}));
+        console.warn("[KwesBot] /api/chat failed:", res.status, data?.reason || data?.error);
+        usedFallback = true;
+      }
+    } catch (err) {
+      console.warn("[KwesBot] /api/chat unreachable:", err?.message);
+      usedFallback = true;
+    }
+
+    if (!reply) {
+      reply = replyFor(localTopic?.id || "fallback");
+      setAiOnline(false);
+    } else if (usedFallback) {
+      setAiOnline(false);
+    }
+
+    setMessages((m) =>
+      m.map((msg) =>
+        msg.id === typingId
+          ? { ...msg, text: reply, typing: false }
+          : msg
+      )
+    );
   };
 
   const onSubmit = (e) => {
@@ -313,8 +469,16 @@ const KwesBot = () => {
                   {t("bot.title")}
                 </p>
                 <p className="text-[11px] uppercase tracking-widest text-white/80">
-                  <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-300 align-middle" />
-                  {t("bot.status")}
+                  <span
+                    className={`mr-1 inline-block h-2 w-2 rounded-full align-middle ${
+                      aiOnline === false
+                        ? "bg-amber-300"
+                        : aiOnline === true
+                        ? "bg-emerald-300"
+                        : "bg-slate-300"
+                    }`}
+                  />
+                  {aiOnline === false ? "Offline mode" : t("bot.status")}
                 </p>
               </div>
               <button

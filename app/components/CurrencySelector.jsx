@@ -12,6 +12,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ChevronDown } from "lucide-react";
+import { useLanguage } from "../../src/contexts/LanguageContext";
 
 // -----------------------------------------------------------------------------
 //  USD-base rates  (1 USD = N <CODE>).
@@ -82,8 +83,9 @@ const CurrencySelector = ({
   onChange,               // (currency) => void
   defaultCode = "USD",
   className = "",
-  label = "Currency",
+  label,
 }) => {
+  const { t } = useLanguage();
   const initial = useMemo(
     () => value ?? findCurrency(defaultCode),
     [value, defaultCode]
@@ -134,7 +136,7 @@ const CurrencySelector = ({
     <div ref={wrapRef} className={`relative ${className}`}>
       {label && (
         <label className="mb-1.5 block text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-          {label}
+          {label ?? t("donate.currency.label")}
         </label>
       )}
 
@@ -175,22 +177,25 @@ const CurrencySelector = ({
             <div className="flex items-center gap-2 border-b border-slate-200 px-3 py-2 dark:border-slate-700">
               <Search className="h-4 w-4 text-slate-400" />
               <input
+                // Auto-focusing the search field is the expected behavior
+                // when a combobox dropdown opens.
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search currency or code…"
+                placeholder={t("donate.currency.search")}
                 className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400 dark:text-slate-100"
               />
             </div>
 
             <ul
               role="listbox"
-              aria-label="World currencies"
+              aria-label={t("donate.currency.worldList")}
               className="max-h-64 overflow-y-auto py-1"
             >
               {filtered.length === 0 && (
                 <li className="px-4 py-3 text-sm text-slate-500">
-                  No matches.
+                  {t("donate.currency.noMatches")}
                 </li>
               )}
               {filtered.map((c) => {

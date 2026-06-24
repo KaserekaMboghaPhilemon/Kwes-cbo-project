@@ -10,7 +10,6 @@
 //  • pt-32 keeps content clear of the sticky navbar.
 // =============================================================================
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {

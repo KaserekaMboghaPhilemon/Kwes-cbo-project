@@ -325,6 +325,9 @@ const DonationSheet = ({ open, onClose, defaultProject = "general" }) => {
                         <div className="flex items-center gap-2 border-b border-slate-200 px-3 py-2 dark:border-slate-700">
                           <Search className="h-4 w-4 text-slate-400" />
                           <input
+                            // Auto-focusing the search field is the expected
+                            // behavior when a combobox dropdown opens.
+                            // eslint-disable-next-line jsx-a11y/no-autofocus
                             autoFocus
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
@@ -428,7 +431,6 @@ const DonationSheet = ({ open, onClose, defaultProject = "general" }) => {
                   // Here you would hand off to the gateway:
                   //   navigate(`/donate/checkout?project=${project}&amount=${usdAmount}&method=${method}`)
                   // For now we just log so the demo stays self-contained.
-                  // eslint-disable-next-line no-console
                   console.log({ project, usdAmount, currency: currency.code, converted, method });
                 }}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-safety-orange px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/40 ring-2 ring-safety-orange ring-offset-2 ring-offset-white transition hover:scale-[1.01] hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50 dark:ring-offset-slate-900"

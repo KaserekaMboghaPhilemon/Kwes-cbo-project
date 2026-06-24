@@ -258,10 +258,11 @@ const Navbar = () => {
                 to={item.to}
                 end={item.to === "/"}
                 className={({ isActive }) =>
-                  `block min-w-[120px] whitespace-nowrap rounded-lg px-4 py-3 text-sm font-medium ${
+                  // White links for maximum contrast in the sidebar.
+                  `block min-w-[120px] whitespace-nowrap rounded-lg px-4 py-3 text-base font-semibold tracking-wide transition-colors ${
                     isActive
-                      ? "bg-safety-orange/10 text-safety-orange"
-                      : "text-slate-700 hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+                      ? "bg-safety-orange/20 text-white"
+                      : "text-white hover:bg-white/10 hover:text-safety-orange"
                   }`
                 }
               >
