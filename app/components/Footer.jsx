@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../src/contexts/LanguageContext";
 import whatsappIcon from "../../src/Images/whatsapp.png";
+import facebookIcon from "../../src/Images/facebook.png";
 import twitterIcon from "../../src/Images/twitter.png";
 import instagramIcon from "../../src/Images/instagram.png";
 import linkedinIcon from "../../src/Images/linkedin (1).png";
@@ -22,21 +23,24 @@ const Footer = () => {
               © {new Date().getFullYear()} KWES. {t("footer.rights")}
             </p>
             {/* Social Links */}
-            <div className="mt-6 flex items-center gap-4">
-              <a href="https://wa.me/254140401128" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="hover:opacity-75 transition duration-300">
-                <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" />
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <a href="https://wa.me/254140401128" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="footer-social-link" aria-label="WhatsApp">
+                <img src={whatsappIcon} alt="WhatsApp" className="footer-social-icon" />
               </a>
-              <a href="https://twitter.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Twitter" className="hover:opacity-75 transition duration-300">
-                <img src={twitterIcon} alt="Twitter" className="h-6 w-6" />
+              <a href="https://facebook.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Facebook" className="footer-social-link" aria-label="Facebook">
+                <img src={facebookIcon} alt="Facebook" className="footer-social-icon" />
               </a>
-              <a href="https://instagram.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Instagram" className="hover:opacity-75 transition duration-300">
-                <img src={instagramIcon} alt="Instagram" className="h-6 w-6" />
+              <a href="https://twitter.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Twitter" className="footer-social-link" aria-label="Twitter">
+                <img src={twitterIcon} alt="Twitter" className="footer-social-icon" />
               </a>
-              <a href="https://linkedin.com/company/kwescbo" target="_blank" rel="noopener noreferrer" title="LinkedIn" className="hover:opacity-75 transition duration-300">
-                <img src={linkedinIcon} alt="LinkedIn" className="h-6 w-6" />
+              <a href="https://instagram.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Instagram" className="footer-social-link" aria-label="Instagram">
+                <img src={instagramIcon} alt="Instagram" className="footer-social-icon" />
               </a>
-              <a href="https://tiktok.com/@kwescbo" target="_blank" rel="noopener noreferrer" title="TikTok" className="hover:opacity-75 transition duration-300">
-                <img src={tiktokIcon} alt="TikTok" className="h-6 w-6" />
+              <a href="https://linkedin.com/company/kwescbo" target="_blank" rel="noopener noreferrer" title="LinkedIn" className="footer-social-link" aria-label="LinkedIn">
+                <img src={linkedinIcon} alt="LinkedIn" className="footer-social-icon" />
+              </a>
+              <a href="https://tiktok.com/@kwescbo" target="_blank" rel="noopener noreferrer" title="TikTok" className="footer-social-link" aria-label="TikTok">
+                <img src={tiktokIcon} alt="TikTok" className="footer-social-icon" />
               </a>
             </div>
           </div>
