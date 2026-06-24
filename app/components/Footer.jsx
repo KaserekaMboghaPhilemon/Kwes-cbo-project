@@ -32,21 +32,27 @@ const Footer = () => {
           {/* Contact Info */}
           <div className="min-h-[8rem]">
             <h4 className="text-lg font-semibold mb-4">{t("footer.contact")}</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                📧{" "}
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-center gap-2">
+                <span className="text-lg">📧</span>
                 <a href="mailto:empowerwomen77@gmail.com" className="hover:text-white transition">
                   empowerwomen77@gmail.com
                 </a>
               </li>
-              <li>
-                📞{" "}
+              <li className="flex items-center gap-2">
+                <span className="text-lg">📞</span>
                 <a href="tel:+254140401128" className="hover:text-white transition">
                   +254140401128
                 </a>
               </li>
-              <li>M-Pesa: +254140401128</li>
-              <li>📍 {t("footer.address")}</li>
+              <li className="flex items-center gap-2">
+                <span className="text-lg">💳</span>
+                <span>M-Pesa: +254140401128</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-lg">📍</span>
+                <span>{t("footer.address")}</span>
+              </li>
             </ul>
           </div>
         </div>
