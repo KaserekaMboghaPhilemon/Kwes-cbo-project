@@ -16,6 +16,21 @@ const Footer = () => {
             <p className="text-sm text-gray-400">
               © {new Date().getFullYear()} KWES. {t("footer.rights")}
             </p>
+            {/* Social Links */}
+            <div className="mt-6 flex items-center gap-4">
+              <a href="https://wa.me/254140401128" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="text-2xl hover:text-green-400 transition">
+                💬
+              </a>
+              <a href="https://facebook.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Facebook" className="text-2xl hover:text-blue-400 transition">
+                👍
+              </a>
+              <a href="https://twitter.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Twitter" className="text-2xl hover:text-sky-400 transition">
+                🐦
+              </a>
+              <a href="https://instagram.com/kwescbo" target="_blank" rel="noopener noreferrer" title="Instagram" className="text-2xl hover:text-pink-400 transition">
+                📸
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}

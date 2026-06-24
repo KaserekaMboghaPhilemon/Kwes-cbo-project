@@ -41,9 +41,9 @@ import breadImg    from "../../src/Images/compound-clean.jpg";
 import cakesImg    from "../../src/Images/compound-view2.jpg";
 
 // ---- WhatsApp config ------------------------------------------------------
-//  Local KWES order line:   0114366228
-//  International (E.164):  +254 114 366 228  →  254114366228
-const KWES_WHATSAPP = "254114366228";
+//  Local KWES order line:   0140401128
+//  International (E.164):  +254 140 401 128  →  254140401128
+const KWES_WHATSAPP = "254140401128";
 
 const handleOrder = (productName) => {
   const message =
