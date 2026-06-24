@@ -26,3 +26,9 @@
     height: 1.4rem;
     object-fit: contain;
 }
+
+.footer-contact-icon {
+    min-width: 2.5rem;
+    text-align: center;
+    line-height: 1;
+}
