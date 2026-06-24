@@ -101,14 +101,14 @@ const Contact = () => {
                   <InfoRow
                     icon={Mail}
                     title={t("contact.email.title")}
-                    body="info@kwes.or.ke"
-                    href="mailto:info@kwes.or.ke"
+                    body="empowerwomen77@gmail.com"
+                    href="mailto:empowerwomen77@gmail.com"
                   />
                   <InfoRow
                     icon={Phone}
                     title={t("contact.phone.title")}
-                    body="+254 700 000 000"
-                    href="tel:+254700000000"
+                    body="+254 140401128"
+                    href="tel:+254140401128"
                   />
                 </ul>
 

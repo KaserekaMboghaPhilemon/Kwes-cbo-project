@@ -97,6 +97,8 @@ const Section = ({ children, className = "", delay = 0 }) => (
 // ---------------------------------------------------------------------------
 const Donate = () => {
   const { t } = useLanguage();
+  const SUPPORT_EMAIL = "empowerwomen77@gmail.com";
+  const MPESA_RECIPIENT = "+254140401128";
 
   const [tier, setTier] = useState(50);          // 10 | 50 | 100 | "custom"
   const [custom, setCustom] = useState(0);       // canonical USD amount
@@ -479,7 +481,7 @@ const Donate = () => {
                       />
                       <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
                         <p className="font-semibold">M-Pesa Recipient</p>
-                        <p className="mt-1 text-safety-orange font-bold">+254140401128</p>
+                        <p className="mt-1 text-safety-orange font-bold">{MPESA_RECIPIENT}</p>
                       </div>
                     </div>
                   )}
@@ -582,9 +584,10 @@ const Donate = () => {
                       {paymentMode === "manual" && (
                         <ol className="mt-4 space-y-2 text-sm text-slate-700 dark:text-slate-200">
                           <li className="flex items-start gap-2"><Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-safety-orange" /><span>Open M-Pesa → <strong>Send Money</strong></span></li>
-                          <li className="flex items-start gap-2"><span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-safety-orange text-[11px] font-extrabold text-white">2</span><span>Send to <strong className="text-safety-orange">+254140401128</strong></span></li>
+                          <li className="flex items-start gap-2"><span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-safety-orange text-[11px] font-extrabold text-white">2</span><span>Send to <strong className="text-safety-orange">{MPESA_RECIPIENT}</strong></span></li>
                           <li className="flex items-start gap-2"><span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-safety-orange text-[11px] font-extrabold text-white">3</span><span>Use <strong>{paymentRef}</strong> as account reference</span></li>
                           <li className="flex items-start gap-2"><span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-safety-orange text-[11px] font-extrabold text-white">4</span><span>Forward the M-Pesa confirmation SMS to <strong>+254114366228</strong> (WhatsApp)</span></li>
+                          <li className="flex items-start gap-2"><span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-safety-orange text-[11px] font-extrabold text-white">5</span><span>Need help? Email <a className="font-semibold text-safety-orange hover:underline" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></span></li>
                         </ol>
                       )}
 
