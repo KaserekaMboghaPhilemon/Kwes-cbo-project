@@ -20,12 +20,12 @@ import {
   MessageCircle,
   X,
   Send,
-  Bot,
   User as UserIcon,
   Sparkles,
 } from "lucide-react";
 
 import { useLanguage } from "../../src/contexts/LanguageContext";
+import botProfile from "../../src/Images/women-working.jpg";
 
 // =============================================================================
 //  KNOWLEDGE BASE
@@ -268,7 +268,10 @@ const QUICK = [
   { id: "donate",   promptKey: "bot.quick.donate",   text: "How do I donate?" },
 ];
 
-const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+const apiBase = (
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? "" : "https://kwes-cbo-project.onrender.com")
+).replace(/\/$/, "");
 const apiUrl = (path) => `${apiBase}${path}`;
 
 // =============================================================================
@@ -282,17 +285,45 @@ const KwesBot = () => {
   const [messages, setMessages] = useState([]);
   //  aiOnline:  null = unknown, true = brain reachable, false = fallback mode
   const [aiOnline, setAiOnline] = useState(null);
+  const failCountRef = useRef(0);
   const scrollRef = useRef(null);
+
+  const markOnline = () => {
+    failCountRef.current = 0;
+    setAiOnline(true);
+  };
+
+  const markFailure = () => {
+    // Avoid UI flicker: only show Offline after 2 consecutive failures.
+    failCountRef.current += 1;
+    if (failCountRef.current >= 2) setAiOnline(false);
+  };
 
   // ---- Health probe on first open -----------------------------------------
   useEffect(() => {
     if (!open || aiOnline !== null) return;
     let cancelled = false;
-    fetch(apiUrl("/api/health"))
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 8000);
+
+    fetch(apiUrl("/api/health"), { signal: controller.signal })
       .then((r) => r.ok ? r.json() : Promise.reject(r.status))
-      .then((d) => { if (!cancelled) setAiOnline(Boolean(d?.ok && d?.key)); })
-      .catch(()  => { if (!cancelled) setAiOnline(false); });
-    return () => { cancelled = true; };
+      .then((d) => {
+        if (cancelled) return;
+        if (Boolean(d?.ok && d?.key)) {
+          markOnline();
+        } else {
+          markFailure();
+        }
+      })
+      .catch(()  => { if (!cancelled) markFailure(); })
+      .finally(() => window.clearTimeout(timeoutId));
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+      window.clearTimeout(timeoutId);
+    };
   }, [open, aiOnline]);
 
   // ---- Seed greeting on first open ----------------------------------------
@@ -371,7 +402,7 @@ const KwesBot = () => {
         const data = await res.json();
         if (data?.reply) {
           reply = data.reply;
-          setAiOnline(true);
+          markOnline();
         }
       } else {
         const data = await res.json().catch(() => ({}));
@@ -385,9 +416,9 @@ const KwesBot = () => {
 
     if (!reply) {
       reply = replyFor(localTopic?.id || "fallback");
-      setAiOnline(false);
+      markFailure();
     } else if (usedFallback) {
-      setAiOnline(false);
+      markFailure();
     }
 
     setMessages((m) =>
@@ -464,9 +495,12 @@ const KwesBot = () => {
           >
             {/* Header */}
             <div className="flex items-center gap-3 bg-gradient-to-br from-forest-green to-emerald-800 px-4 py-3 text-white">
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-safety-orange ring-2 ring-white/30">
-                <Bot className="h-5 w-5" />
-              </div>
+              <img
+                src={botProfile}
+                alt="KWES support"
+                className="h-10 w-10 rounded-full object-cover ring-2 ring-white/35"
+                loading="lazy"
+              />
               <div className="flex-1">
                 <p className="text-sm font-extrabold leading-tight">
                   {t("bot.title")}
@@ -474,14 +508,18 @@ const KwesBot = () => {
                 <p className="text-[11px] uppercase tracking-widest text-white/80">
                   <span
                     className={`mr-1 inline-block h-2 w-2 rounded-full align-middle ${
-                      aiOnline === false
-                        ? "bg-amber-300"
-                        : aiOnline === true
+                      aiOnline === true
                         ? "bg-emerald-300"
+                        : aiOnline === false
+                        ? "bg-amber-300"
                         : "bg-slate-300"
                     }`}
                   />
-                  {aiOnline === false ? "Offline mode" : t("bot.status")}
+                  {aiOnline === true
+                    ? t("bot.status")
+                    : aiOnline === false
+                    ? "Offline mode"
+                    : "Checking AI brain..."}
                 </p>
               </div>
               <button
@@ -567,11 +605,20 @@ const Bubble = ({ from, text }) => {
       <span
         className={`mb-0.5 inline-flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full ${
           isBot
-            ? "bg-forest-green text-white"
+            ? "bg-forest-green text-white overflow-hidden"
             : "bg-safety-orange/15 text-safety-orange"
         }`}
       >
-        {isBot ? <Bot className="h-3.5 w-3.5" /> : <UserIcon className="h-3.5 w-3.5" />}
+        {isBot ? (
+          <img
+            src={botProfile}
+            alt="KWES support"
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <UserIcon className="h-3.5 w-3.5" />
+        )}
       </span>
       <p
         className={`max-w-[78%] whitespace-pre-line rounded-2xl px-3.5 py-2 text-sm leading-relaxed shadow-sm ${
