@@ -17,7 +17,6 @@ import heroImg from "../../src/Images/women-working.jpg";
 import poultryImg from "../../src/Images/improved-kienyeji.jpg";
 import eggImg from "../../src/Images/women-cleaning.jpg";
 import compoundImg from "../../src/Images/compound-view.jpg";
-import teamPhoto1 from "../../src/Images/kwes photos/African woman wearing a bright orange KWES branded t-shirt, natural short hairstyle, warm genuine smile, professional portrait photography, turquoise green background, confident and friendly appearance.jpg";
 import teamPhoto2 from "../../src/Images/kwes photos/kwes-team-2.png";
 import teamPhoto3 from "../../src/Images/kwes photos/kwes-team-3.png";
 
@@ -58,10 +57,10 @@ const Home = () => {
 
   // Team spotlight: use the three provided photos and repeat to complete five profiles.
   const teamMembers = [
-    { name: "Uwineza Jemima", role: "Co-Founder & Director", image: teamPhoto1 },
+    { name: "Uwineza Jemima", role: "Co-Founder & Director", image: teamPhoto2 },
     { name: "Mama Adasa", role: "Programs Lead", image: teamPhoto2 },
     { name: "Grace N.", role: "Finance & Accountability", image: teamPhoto3 },
-    { name: "Esther M.", role: "Training & Education", image: teamPhoto1 },
+    { name: "Esther M.", role: "Training & Education", image: teamPhoto3 },
     { name: "Joyce L.", role: "Community Mobilization", image: teamPhoto2 },
   ];
 

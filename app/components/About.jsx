@@ -18,7 +18,6 @@ import storyImg from "../../src/Images/crowd-broilers-fed.jpg";
 import storyImg2 from "../../src/Images/women-cleaning2.jpg";
 import founderImg from "../../src/Images/improved-k-fed.jpg";
 import compoundImg from "../../src/Images/compound-view.jpg";
-import teamPhoto1 from "../../src/Images/kwes photos/African woman wearing a bright orange KWES branded t-shirt, natural short hairstyle, warm genuine smile, professional portrait photography, turquoise green background, confident and friendly appearance.jpg";
 import teamPhoto2 from "../../src/Images/kwes photos/kwes-team-2.png";
 import teamPhoto3 from "../../src/Images/kwes photos/kwes-team-3.png";
 
@@ -57,7 +56,7 @@ const FOUNDERS = [
     name: "Uwineza Jemima.",
     roleKey: "aboutPage.founders.uwineza.role",
     bioKey: "aboutPage.founders.uwineza.bio",
-    image: teamPhoto1,
+    image: teamPhoto2,
   },
   {
     name: "Mama Adasa.",
@@ -75,7 +74,7 @@ const FOUNDERS = [
     name: "Esther M.",
     roleKey: "aboutPage.founders.esther.role",
     bioKey: "aboutPage.founders.esther.bio",
-    image: teamPhoto1,
+    image: teamPhoto3,
   },
   {
     name: "Joyce L.",
