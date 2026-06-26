@@ -17,6 +17,9 @@ import heroImg from "../../src/Images/women-working.jpg";
 import poultryImg from "../../src/Images/improved-kienyeji.jpg";
 import eggImg from "../../src/Images/women-cleaning.jpg";
 import compoundImg from "../../src/Images/compound-view.jpg";
+import teamPhoto1 from "../../src/Images/kwes photos/African woman wearing a bright orange KWES branded t-shirt, natural short hairstyle, warm genuine smile, professional portrait photography, turquoise green background, confident and friendly appearance.jpg";
+import teamPhoto2 from "../../src/Images/kwes photos/kwes-team-2.png";
+import teamPhoto3 from "../../src/Images/kwes photos/kwes-team-3.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -52,6 +55,16 @@ const Home = () => {
     { value: "85%", labelKey: "home.stat.income", Icon: TrendingUp },
     { value: "40+", labelKey: "home.stat.partners", Icon: HeartHandshake },
   ];
+
+  // Team spotlight: use the three provided photos and repeat to complete five profiles.
+  const teamMembers = [
+    { name: "Uwineza Jemima", role: "Co-Founder & Director", image: teamPhoto1 },
+    { name: "Mama Adasa", role: "Programs Lead", image: teamPhoto2 },
+    { name: "Grace N.", role: "Finance & Accountability", image: teamPhoto3 },
+    { name: "Esther M.", role: "Training & Education", image: teamPhoto1 },
+    { name: "Joyce L.", role: "Community Mobilization", image: teamPhoto2 },
+  ];
+
   return (
     <div className="min-h-screen font-sans text-gray-900 bg-white antialiased">
       {/* ---------- HERO ---------- */}
@@ -310,6 +323,58 @@ const Home = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* ---------- KWES TEAM (FIVE WOMEN) ---------- */}
+      <section className="bg-[#f6f8f7] py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="mx-auto mb-14 max-w-3xl text-center"
+          >
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#ff6d00]">
+              KWES Leadership
+            </span>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-[#004d40] sm:text-4xl">
+              Meet Our Team of Five Women
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-gray-600">
+              The core women leading KWES programs, partnerships, and community resilience in Kakuma.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            {teamMembers.map((member, i) => (
+              <motion.article
+                key={`${member.name}-${i}`}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="group overflow-hidden rounded-2xl bg-white shadow-xl shadow-black/5 ring-1 ring-black/5"
+              >
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <img
+                    src={member.image}
+                    alt={`${member.name} - ${member.role}`}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-base font-bold text-[#004d40]">{member.name}</h3>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#ff6d00]">
+                    {member.role}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </section>
 
