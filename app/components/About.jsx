@@ -18,6 +18,9 @@ import storyImg from "../../src/Images/crowd-broilers-fed.jpg";
 import storyImg2 from "../../src/Images/women-cleaning2.jpg";
 import founderImg from "../../src/Images/improved-k-fed.jpg";
 import compoundImg from "../../src/Images/compound-view.jpg";
+import teamPhoto1 from "../../src/Images/kwes photos/African woman wearing a bright orange KWES branded t-shirt, natural short hairstyle, warm genuine smile, professional portrait photography, turquoise green background, confident and friendly appearance.jpg";
+import teamPhoto2 from "../../src/Images/kwes photos/kwes-team-2.png";
+import teamPhoto3 from "../../src/Images/kwes photos/kwes-team-3.png";
 
 /* ---------- Core values ---------- */
 const VALUES = [
@@ -54,31 +57,31 @@ const FOUNDERS = [
     name: "Uwineza Jemima.",
     roleKey: "aboutPage.founders.uwineza.role",
     bioKey: "aboutPage.founders.uwineza.bio",
-    image: founderImg,
+    image: teamPhoto1,
   },
   {
     name: "Mama Adasa.",
     roleKey: "aboutPage.founders.adasa.role",
     bioKey: "aboutPage.founders.adasa.bio",
-    image: storyImg,
+    image: teamPhoto2,
   },
   {
     name: "Grace N.",
     roleKey: "aboutPage.founders.grace.role",
     bioKey: "aboutPage.founders.grace.bio",
-    image: storyImg2,
+    image: teamPhoto3,
   },
   {
     name: "Esther M.",
     roleKey: "aboutPage.founders.esther.role",
     bioKey: "aboutPage.founders.esther.bio",
-    image: compoundImg,
+    image: teamPhoto1,
   },
   {
     name: "Joyce L.",
     roleKey: "aboutPage.founders.joyce.role",
     bioKey: "aboutPage.founders.joyce.bio",
-    image: founderImg,
+    image: teamPhoto2,
   },
 ];
 
