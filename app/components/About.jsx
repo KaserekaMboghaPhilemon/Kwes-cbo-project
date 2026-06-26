@@ -18,9 +18,6 @@ import storyImg from "../../src/Images/crowd-broilers-fed.jpg";
 import storyImg2 from "../../src/Images/women-cleaning2.jpg";
 import founderImg from "../../src/Images/improved-k-fed.jpg";
 import compoundImg from "../../src/Images/compound-view.jpg";
-import teamPhoto1 from "../../src/Images/kwes photos/African woman wearing a bright orange KWES branded t-shirt, natural short hairstyle, warm genuine smile, professional portrait photography, turquoise green background, confident and friendly appearance.jpg";
-import teamPhoto2 from "../../src/Images/kwes photos/kwes-team-2.png";
-import teamPhoto3 from "../../src/Images/kwes photos/kwes-team-3.png";
 
 /* ---------- Core values ---------- */
 const VALUES = [
@@ -83,14 +80,6 @@ const FOUNDERS = [
     bioKey: "aboutPage.founders.joyce.bio",
     image: founderImg,
   },
-];
-
-const TEAM_FIVE = [
-  { name: "Uwineza Jemima", role: "Co-Founder & Director", image: teamPhoto1 },
-  { name: "Mama Adasa", role: "Programs Lead", image: teamPhoto2 },
-  { name: "Grace N.", role: "Finance & Accountability", image: teamPhoto3 },
-  { name: "Esther M.", role: "Training & Education", image: teamPhoto1 },
-  { name: "Joyce L.", role: "Community Mobilization", image: teamPhoto2 },
 ];
 
 const fadeUp = {
@@ -423,60 +412,6 @@ const About = () => {
                 <h3 className="font-bold text-lg text-[#004d40] leading-tight">{f.name}</h3>
                 <p className="text-xs font-semibold tracking-wide uppercase text-[#ff6d00] mb-2">{t(f.roleKey)}</p>
                 <p className="text-sm text-gray-600 leading-relaxed">{t(f.bioKey)}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============== KWES TEAM (FIVE WOMEN) ============== */}
-      <section className="px-4 py-24 bg-[#f6f8f7]">
-        <div className="max-w-container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-14 text-center"
-          >
-            <span className="text-[#ff6d00] font-semibold tracking-[0.25em] uppercase text-xs">
-              KWES Team
-            </span>
-            <h2
-              className="font-serif text-4xl md:text-6xl font-bold mt-3 leading-tight text-[#004d40]"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              Team of <span className="italic text-[#ff6d00]">Five Women</span>
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto mt-4">
-              The women leading KWES strategy, programs, and community resilience in Kakuma.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-            {TEAM_FIVE.map((member, i) => (
-              <motion.article
-                key={`${member.name}-${i}`}
-                variants={fadeUp}
-                custom={i}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                className="group bg-white rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-lg shadow-black/5"
-              >
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={`${member.name} - ${member.role}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#004d40]/70 via-transparent to-transparent" />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-base text-[#004d40] leading-tight">{member.name}</h3>
-                  <p className="text-xs font-semibold tracking-wide uppercase text-[#ff6d00] mt-1">
-                    {member.role}
-                  </p>
-                </div>
               </motion.article>
             ))}
           </div>
