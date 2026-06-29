@@ -15,6 +15,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useLanguage } from "../../src/contexts/LanguageContext";
+import tailoringTrainingRoomImg from "../../src/Images/tailoring-training-room.png";
 
 /* ---------- Reusable Glass Card ---------- */
 const GlassCard = ({ children, className = "" }) => (
@@ -75,7 +76,18 @@ const VideoPlaceholder = ({ label }) => (
 );
 
 /* ---------- Production Pillar ---------- */
-const Pillar = ({ icon: Icon, eyebrow, title, text, bullets, reverse, videoLabel, ctaLabel }) => (
+const Pillar = ({
+  icon: Icon,
+  eyebrow,
+  title,
+  text,
+  bullets,
+  reverse,
+  videoLabel,
+  ctaLabel,
+  mediaSrc,
+  mediaAlt,
+}) => (
   <motion.div
     initial="hidden"
     whileInView="show"
@@ -104,7 +116,18 @@ const Pillar = ({ icon: Icon, eyebrow, title, text, bullets, reverse, videoLabel
         {ctaLabel} <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
       </a>
     </div>
-    <VideoPlaceholder label={videoLabel} />
+    {mediaSrc ? (
+      <figure className="relative aspect-video rounded-2xl overflow-hidden border border-[#39ff14]/20 shadow-[0_0_30px_-12px_rgba(57,255,20,0.35)]">
+        <img
+          src={mediaSrc}
+          alt={mediaAlt}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </figure>
+    ) : (
+      <VideoPlaceholder label={videoLabel} />
+    )}
   </motion.div>
 );
 
@@ -154,6 +177,8 @@ const VocationalHub = () => {
         t("hubPage.pillars.tailoring.bullet3"),
       ],
       videoLabel: t("hubPage.pillars.tailoring.video"),
+      mediaSrc: tailoringTrainingRoomImg,
+      mediaAlt: "Five KWES women in a tailoring training room with many other women learning around them",
     },
     {
       icon: Cookie,
@@ -320,6 +345,8 @@ const VocationalHub = () => {
                 bullets={pillar.bullets}
                 videoLabel={pillar.videoLabel}
                 ctaLabel={t("btn.learnMore")}
+                mediaSrc={pillar.mediaSrc}
+                mediaAlt={pillar.mediaAlt}
               />
             ))}
           </div>

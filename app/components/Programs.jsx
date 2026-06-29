@@ -24,7 +24,7 @@ import {
 import { useLanguage } from "../../src/contexts/LanguageContext";
 
 import poultryImg from "../../src/Images/improved-kienyeji.jpg";
-import tailoringImg from "../../src/Images/women-cleaning.jpg";
+import tailoringImg from "../../src/Images/tailoring-training-room.png";
 import agriImg from "../../src/Images/compound-clean.jpg";
 import heroImg from "../../src/Images/compound-view.jpg";
 
