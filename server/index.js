@@ -17,6 +17,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import { z } from "zod";
+import nodemailer from "nodemailer";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 dotenv.config();
@@ -27,6 +28,19 @@ const IS_PROD = process.env.NODE_ENV === "production";
 const MPESA_RECEIVER_MSISDN = process.env.MPESA_RECEIVER_MSISDN || "+254140401128";
 const ADMIN_KEY = process.env.ADMIN_KEY || "";
 const CALLBACK_SECRET = process.env.MPESA_CALLBACK_SECRET || "";
+const SMTP_HOST = process.env.SMTP_HOST || "";
+const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
+const SMTP_USER = process.env.SMTP_USER || "";
+const SMTP_PASS = process.env.SMTP_PASS || "";
+const SMTP_SECURE = String(process.env.SMTP_SECURE || "false").toLowerCase() === "true";
+const CONTACT_EMAIL_TO = process.env.CONTACT_EMAIL_TO || "";
+const CONTACT_EMAIL_FROM =
+  process.env.CONTACT_EMAIL_FROM ||
+  process.env.SMTP_USER ||
+  "no-reply@kwes.local";
+
+const isContactEmailConfigured = () =>
+  Boolean(SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS && CONTACT_EMAIL_TO);
 
 // ---- Security: helmet + strict CORS allowlist ------------------------------
 // In dev we accept the Vite origin; in prod we require an explicit allowlist
@@ -96,6 +110,18 @@ const statusLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many status checks.", reason: "rate_limited" },
 });
+
+const emailTransporter = isContactEmailConfigured()
+  ? nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: SMTP_SECURE,
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASS,
+      },
+    })
+  : null;
 
 const contactLimiter = rateLimit({
   windowMs: 60_000,
@@ -440,6 +466,46 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
 
   saveContactMessage(saved);
 
+  if (!emailTransporter) {
+    return res.status(503).json({
+      error: "Contact email is not configured on the server.",
+      reason: "email_not_configured",
+    });
+  }
+
+  try {
+    await emailTransporter.sendMail({
+      from: CONTACT_EMAIL_FROM,
+      to: CONTACT_EMAIL_TO,
+      replyTo: `${saved.name} <${saved.email}>`,
+      subject: `[KWES Contact] ${saved.subject}`,
+      text: [
+        `Name: ${saved.name}`,
+        `Email: ${saved.email}`,
+        `Subject: ${saved.subject}`,
+        `Message:`,
+        saved.message,
+        "",
+        `Meta: id=${saved.id} ip=${saved.ip} ua=${saved.ua}`,
+      ].join("\n"),
+      html: `
+        <h2>New KWES Contact Message</h2>
+        <p><strong>Name:</strong> ${saved.name}</p>
+        <p><strong>Email:</strong> ${saved.email}</p>
+        <p><strong>Subject:</strong> ${saved.subject}</p>
+        <p><strong>Message:</strong><br/>${saved.message.replace(/\n/g, "<br/>")}</p>
+        <hr/>
+        <p><small>Message ID: ${saved.id}</small></p>
+      `,
+    });
+  } catch (err) {
+    console.error("[Contact] SMTP send failed:", err?.message || err);
+    return res.status(502).json({
+      error: "Message could not be delivered by email.",
+      reason: "email_send_failed",
+    });
+  }
+
   // Optional forwarding hook (Formspree/Slack/Zapier/webhook receiver).
   const webhookUrl = process.env.CONTACT_WEBHOOK_URL || "";
   if (webhookUrl) {
@@ -665,6 +731,7 @@ app.get("/api/health", (_req, res) =>
     brain: "gemini-1.5-flash",
     key: Boolean(process.env.GEMINI_API_KEY),
     mpesaConfigured: isMpesaConfigured(),
+    contactEmailConfigured: isContactEmailConfigured(),
     contactWebhookConfigured: Boolean(process.env.CONTACT_WEBHOOK_URL),
   })
 );

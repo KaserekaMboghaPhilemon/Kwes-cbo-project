@@ -49,6 +49,11 @@ const Section = ({ children, className = "", delay = 0 }) => (
 const MAPS_EMBED =
   "https://www.google.com/maps?q=KWES+-+Kakuma+Women+Empowerment+and+Self-Reliance,+Kakuma,+Kenya&hl=en&z=17&output=embed";
 
+const CONTACT_API_BASE =
+  import.meta.env.VITE_CONTACT_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || "";
+
+const contactApiUrl = (path) => `${CONTACT_API_BASE}${path}`;
+
 const Contact = () => {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -72,7 +77,7 @@ const Contact = () => {
     setSubmitted(false);
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(contactApiUrl("/api/contact"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
