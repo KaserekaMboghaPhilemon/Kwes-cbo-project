@@ -45,9 +45,9 @@ const Section = ({ children, className = "", delay = 0 }) => (
   </motion.section>
 );
 
-// Google Maps embed → "Kakuma, Turkana West, Kenya"
+// Google Maps embed → specific KWES place profile in Kakuma, Kenya.
 const MAPS_EMBED =
-  "https://www.google.com/maps?q=Kakuma,Turkana%20West,Kenya&output=embed";
+  "https://www.google.com/maps?q=KWES+-+Kakuma+Women+Empowerment+and+Self-Reliance,+Kakuma,+Kenya&hl=en&z=17&output=embed";
 
 const Contact = () => {
   const { t } = useLanguage();
