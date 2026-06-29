@@ -129,26 +129,29 @@ const Navbar = () => {
             : "bg-ngo-cream/70 backdrop-blur dark:bg-slate-900/70"
         }`}
       >
-        <div className="mx-auto flex h-24 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-24 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6 lg:gap-6 lg:px-8">
           {/* -------- LEFT: Logo (h-16) + brand, never shrinks -------- */}
-          <Link to="/" className="flex flex-shrink-0 items-center gap-4">
+          <Link to="/" className="flex flex-shrink-0 items-center gap-2 sm:gap-4">
             <img
               src={logo}
               alt="KAKUMA WOMEN logo"
-              className="img-raw h-16 w-16 flex-shrink-0 rounded-full object-cover ring-2 ring-safety-orange/40 shadow-md"
+              className="img-raw h-12 w-12 flex-shrink-0 rounded-full object-cover ring-2 ring-safety-orange/40 shadow-md sm:h-16 sm:w-16"
             />
             <div className="flex flex-col justify-center leading-tight">
-              <h1 className="whitespace-nowrap text-base font-extrabold tracking-tight text-forest-green dark:text-white sm:text-xl">
+              <h1 className="text-sm font-extrabold tracking-tight text-forest-green dark:text-white sm:hidden">
+                KWES
+              </h1>
+              <h1 className="hidden whitespace-nowrap text-base font-extrabold tracking-tight text-forest-green dark:text-white sm:block sm:text-xl">
                 {t("header.brand")}
               </h1>
-              <p className="whitespace-nowrap text-[11px] font-medium text-slate-500 dark:text-slate-300 sm:text-xs">
+              <p className="hidden whitespace-nowrap text-[11px] font-medium text-slate-500 dark:text-slate-300 md:block md:text-xs">
                 {t("header.tagline")}
               </p>
             </div>
           </Link>
 
           {/* -------- RIGHT: COMMAND CENTER (always visible) -------- */}
-          <div className="flex items-center gap-4 md:gap-6 flex-shrink-0">
+          <div className="flex flex-shrink-0 items-center gap-2 sm:gap-3 md:gap-6">
             {/* 1) Language Switcher (flag dropdown) */}
             <LanguageSwitcher />
 
@@ -165,6 +168,7 @@ const Navbar = () => {
             {/* 3) Donate Button (always visible) */}
             <Link
               to="/donate"
+              aria-label={t("btn.donate")}
               className="group relative inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-safety-orange px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange-500/50 ring-2 ring-safety-orange ring-offset-2 ring-offset-ngo-cream transition-transform duration-300 ease-out hover:scale-110 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/60 dark:ring-offset-slate-900 animate-slow-pulse sm:px-6"
             >
               <Heart className="h-4 w-4 animate-soft-bounce" fill="currentColor" />

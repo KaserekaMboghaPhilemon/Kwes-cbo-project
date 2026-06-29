@@ -97,6 +97,17 @@ const statusLimiter = rateLimit({
   message: { error: "Too many status checks.", reason: "rate_limited" },
 });
 
+const contactLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 12,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    error: "Too many contact messages. Please try again in a minute.",
+    reason: "rate_limited",
+  },
+});
+
 // ---- Zod schema: single source of truth for the chat request body ---------
 const ChatSchema = z.object({
   message: z.string().min(1).max(2000),
@@ -120,6 +131,13 @@ const MpesaInitiateSchema = z.object({
   donorPhone: z.string().min(9).max(20),
   project: z.string().max(40).optional(),
   recurring: z.boolean().optional(),
+});
+
+const ContactSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(180),
+  subject: z.string().trim().min(3).max(180),
+  message: z.string().trim().min(10).max(4000),
 });
 
 // ---- Strategic System Prompt -------------------------------------------------
@@ -320,6 +338,17 @@ const auditUpsert = (ref, patch) => {
 
 const auditGet = (ref) => donations.get(ref) || null;
 
+// Keep recent contact messages in memory for operational visibility.
+const MAX_CONTACT_MESSAGES = 500;
+const contactMessages = [];
+
+const saveContactMessage = (entry) => {
+  contactMessages.unshift(entry);
+  if (contactMessages.length > MAX_CONTACT_MESSAGES) {
+    contactMessages.pop();
+  }
+};
+
 // Strip hidden scratchpad — return only what the user should see.
 const extractFinal = (raw) => {
   if (!raw) return "";
@@ -383,6 +412,65 @@ app.post("/api/chat", chatLimiter, async (req, res) => {
     console.error("[KwesBot] Gemini error:", reason, msg);
     res.status(502).json({ error: "Brain connection flickering.", reason });
   }
+});
+
+app.post("/api/contact", contactLimiter, async (req, res) => {
+  const parsed = ContactSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({
+      error: "Please complete all fields correctly.",
+      reason: "bad_input",
+    });
+  }
+
+  const { name, email, subject, message } = parsed.data;
+  const saved = {
+    id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    name,
+    email,
+    subject,
+    message,
+    createdAt: Date.now(),
+    ip:
+      String(req.headers["x-forwarded-for"] || "")
+        .split(",")[0]
+        .trim() || req.ip || "unknown",
+    ua: req.headers["user-agent"] || "unknown",
+  };
+
+  saveContactMessage(saved);
+
+  // Optional forwarding hook (Formspree/Slack/Zapier/webhook receiver).
+  const webhookUrl = process.env.CONTACT_WEBHOOK_URL || "";
+  if (webhookUrl) {
+    try {
+      const hookRes = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "kwes-contact-form",
+          id: saved.id,
+          name: saved.name,
+          email: saved.email,
+          subject: saved.subject,
+          message: saved.message,
+          createdAt: saved.createdAt,
+        }),
+      });
+
+      if (!hookRes.ok) {
+        const body = await hookRes.text();
+        console.error("[Contact] Webhook forward failed:", hookRes.status, body);
+      }
+    } catch (err) {
+      console.error("[Contact] Webhook request failed:", err?.message || err);
+    }
+  }
+
+  return res.status(201).json({
+    ok: true,
+    message: "Message received. We will respond soon.",
+  });
 });
 
 app.post("/api/payments/mpesa/initiate", paymentLimiter, async (req, res) => {
@@ -577,6 +665,7 @@ app.get("/api/health", (_req, res) =>
     brain: "gemini-1.5-flash",
     key: Boolean(process.env.GEMINI_API_KEY),
     mpesaConfigured: isMpesaConfigured(),
+    contactWebhookConfigured: Boolean(process.env.CONTACT_WEBHOOK_URL),
   })
 );
 

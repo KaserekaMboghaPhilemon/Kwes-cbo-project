@@ -53,12 +53,54 @@ const Contact = () => {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-  const onSubmit = (e) => {
+  const onChange = (e) => {
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    if (submitted) setSubmitted(false);
+    if (submitError) setSubmitError("");
+  };
+
+  // Submit to the server API so messages are validated and logged centrally.
+  const onSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setForm({ name: "", email: "", subject: "", message: "" });
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitError("");
+    setSubmitted(false);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          subject: form.subject.trim(),
+          message: form.message.trim(),
+        }),
+      });
+
+      if (!res.ok) {
+        let errorMessage = t("contact.form.error");
+        try {
+          const data = await res.json();
+          if (data?.error && typeof data.error === "string") errorMessage = data.error;
+        } catch {
+          // Keep the translated fallback when the response body is not JSON.
+        }
+        throw new Error(errorMessage);
+      }
+
+      setSubmitted(true);
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      setSubmitError(err?.message || t("contact.form.error"));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -153,6 +195,7 @@ const Contact = () => {
                       name="name"
                       value={form.name}
                       onChange={onChange}
+                      autoComplete="name"
                       required
                     />
                     <Field
@@ -161,6 +204,8 @@ const Contact = () => {
                       type="email"
                       value={form.email}
                       onChange={onChange}
+                      autoComplete="email"
+                      inputMode="email"
                       required
                     />
                   </div>
@@ -170,6 +215,7 @@ const Contact = () => {
                     name="subject"
                     value={form.subject}
                     onChange={onChange}
+                    autoComplete="on"
                     required
                   />
 
@@ -187,6 +233,7 @@ const Contact = () => {
                       rows={6}
                       value={form.message}
                       onChange={onChange}
+                      autoComplete="on"
                       required
                       className="w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-safety-orange focus:outline-none focus:ring-2 focus:ring-safety-orange/40 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
                     />
@@ -194,9 +241,19 @@ const Contact = () => {
 
                   <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
                     {submitted ? (
-                      <p className="inline-flex items-center gap-2 rounded-full bg-forest-green/10 px-4 py-2 text-sm font-semibold text-forest-green dark:bg-forest-green/25 dark:text-emerald-200">
+                      <p
+                        role="status"
+                        className="inline-flex items-center gap-2 rounded-full bg-forest-green/10 px-4 py-2 text-sm font-semibold text-forest-green dark:bg-forest-green/25 dark:text-emerald-200"
+                      >
                         <CheckCircle2 className="h-4 w-4" />
                         {t("contact.form.success")}
+                      </p>
+                    ) : submitError ? (
+                      <p
+                        role="alert"
+                        className="rounded-full bg-red-100 px-4 py-2 text-sm font-semibold text-red-700 dark:bg-red-900/30 dark:text-red-300"
+                      >
+                        {submitError}
                       </p>
                     ) : (
                       <span />
@@ -204,10 +261,11 @@ const Contact = () => {
 
                     <button
                       type="submit"
-                      className="group inline-flex items-center justify-center gap-2 rounded-full bg-safety-orange px-7 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/40 ring-2 ring-safety-orange ring-offset-2 ring-offset-white transition hover:scale-105 hover:bg-orange-600 hover:shadow-xl dark:ring-offset-slate-900"
+                      disabled={isSubmitting}
+                      className="group inline-flex items-center justify-center gap-2 rounded-full bg-safety-orange px-7 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/40 ring-2 ring-safety-orange ring-offset-2 ring-offset-white transition hover:scale-105 hover:bg-orange-600 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70 dark:ring-offset-slate-900"
                     >
                       <Send className="h-4 w-4 transition group-hover:translate-x-0.5" />
-                      {t("contact.form.send")}
+                      {isSubmitting ? t("contact.form.sending") : t("contact.form.send")}
                     </button>
                   </div>
                 </form>
@@ -250,7 +308,16 @@ const InfoRow = ({ icon: IconComponent, title, body, href }) => {
   );
 };
 
-const Field = ({ label, name, type = "text", value, onChange, required }) => (
+const Field = ({
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
+  required,
+  autoComplete,
+  inputMode,
+}) => (
   <div>
     <label
       htmlFor={name}
@@ -265,8 +332,9 @@ const Field = ({ label, name, type = "text", value, onChange, required }) => (
       value={value}
       onChange={onChange}
       required={required}
-      autoComplete="off"
-      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm transition focus:border-safety-orange focus:outline-none focus:ring-2 focus:ring-safety-orange/40 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
+      autoComplete={autoComplete}
+      inputMode={inputMode}
+      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-700 shadow-sm transition focus:border-safety-orange focus:outline-none focus:ring-2 focus:ring-safety-orange/40 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
     />
   </div>
 );
