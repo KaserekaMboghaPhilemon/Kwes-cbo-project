@@ -16,6 +16,7 @@ const transporter = isConfigured()
       host: SMTP_HOST,
       port: SMTP_PORT,
       secure: SMTP_SECURE,
+      family: 4,
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS,

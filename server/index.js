@@ -60,9 +60,7 @@ const isAllowedOrigin = (origin) => {
 
   // Allow Vercel preview deployments without needing to copy each random URL
   // into Render every time. Keep the explicit allowlist for everything else.
-  if (/^https:\/\/[a-z0-9-]+(?:-[a-z0-9-]+)*\.vercel\.app$/i.test(origin)) {
-    return allowed.some((entry) => /vercel\.app$/i.test(entry));
-  }
+  if (/^https:\/\/[a-z0-9-]+(?:-[a-z0-9-]+)*\.vercel\.app$/i.test(origin)) return true;
 
   return false;
 };
@@ -128,6 +126,7 @@ const emailTransporter = isContactEmailConfigured()
       host: SMTP_HOST,
       port: SMTP_PORT,
       secure: SMTP_SECURE,
+      family: 4,
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS,
