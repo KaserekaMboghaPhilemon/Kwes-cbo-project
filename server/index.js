@@ -55,6 +55,18 @@ const allowed = (
   .map((s) => s.trim())
   .filter(Boolean);
 
+const isAllowedOrigin = (origin) => {
+  if (allowed.includes(origin)) return true;
+
+  // Allow Vercel preview deployments without needing to copy each random URL
+  // into Render every time. Keep the explicit allowlist for everything else.
+  if (/^https:\/\/[a-z0-9-]+(?:-[a-z0-9-]+)*\.vercel\.app$/i.test(origin)) {
+    return allowed.some((entry) => /vercel\.app$/i.test(entry));
+  }
+
+  return false;
+};
+
 if (IS_PROD && allowed.length === 0) {
   console.warn("[KwesBot] ALLOWED_ORIGIN is empty in production; browser API calls will be blocked.");
 }
@@ -66,7 +78,7 @@ app.use(
     origin(origin, cb) {
       // Allow same-origin / curl (no Origin header) and dev tools.
       if (!origin) return cb(null, true);
-      return allowed.includes(origin)
+      return isAllowedOrigin(origin)
         ? cb(null, true)
         : cb(new Error(`CORS blocked: ${origin}`));
     },
