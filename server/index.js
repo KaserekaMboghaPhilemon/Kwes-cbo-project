@@ -33,7 +33,7 @@ const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_USER = process.env.SMTP_USER || "";
 const SMTP_PASS = process.env.SMTP_PASS || "";
 const SMTP_SECURE = String(process.env.SMTP_SECURE || "false").toLowerCase() === "true";
-const CONTACT_EMAIL_TO = process.env.CONTACT_EMAIL_TO || "";
+const CONTACT_EMAIL_TO = process.env.CONTACT_EMAIL_TO || SMTP_USER || "";
 const CONTACT_EMAIL_FROM =
   process.env.CONTACT_EMAIL_FROM ||
   process.env.SMTP_USER ||
@@ -467,8 +467,36 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
   saveContactMessage(saved);
 
   if (!emailTransporter) {
-    return res.status(503).json({
-      error: "Contact email is not configured on the server.",
+    const webhookUrl = process.env.CONTACT_WEBHOOK_URL || "";
+
+    if (webhookUrl) {
+      try {
+        const hookRes = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            source: "kwes-contact-form",
+            id: saved.id,
+            name: saved.name,
+            email: saved.email,
+            subject: saved.subject,
+            message: saved.message,
+            createdAt: saved.createdAt,
+          }),
+        });
+
+        if (!hookRes.ok) {
+          const body = await hookRes.text();
+          console.error("[Contact] Webhook forward failed:", hookRes.status, body);
+        }
+      } catch (err) {
+        console.error("[Contact] Webhook request failed:", err?.message || err);
+      }
+    }
+
+    return res.status(201).json({
+      ok: true,
+      message: "Message received. Email delivery is not configured yet.",
       reason: "email_not_configured",
     });
   }

@@ -5,7 +5,7 @@ const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_USER = process.env.SMTP_USER || "";
 const SMTP_PASS = process.env.SMTP_PASS || "";
 const SMTP_SECURE = String(process.env.SMTP_SECURE || "false").toLowerCase() === "true";
-const CONTACT_EMAIL_TO = process.env.CONTACT_EMAIL_TO || "";
+const CONTACT_EMAIL_TO = process.env.CONTACT_EMAIL_TO || SMTP_USER || "";
 const CONTACT_EMAIL_FROM = process.env.CONTACT_EMAIL_FROM || SMTP_USER || "no-reply@kwes.local";
 
 const isConfigured = () =>
@@ -68,6 +68,15 @@ export default async function handler(req, res) {
   const subject = String(req.body.subject || "").trim();
   const message = String(req.body.message || "").trim();
   const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+  if (!transporter) {
+    console.warn("[Vercel Contact API] SMTP is not configured; accepting contact submission without email delivery.");
+    return res.status(201).json({
+      ok: true,
+      message: "Message received. Email delivery is not configured yet.",
+      reason: "email_not_configured",
+    });
+  }
 
   try {
     await transporter.sendMail({

@@ -56,6 +56,19 @@ const contactApiUrl = (base, path) => `${base}${path}`;
 
 const CONTACT_REQUEST_TIMEOUT_MS = 15000;
 
+const isValidContactForm = ({ name, email, subject, message }) => {
+  const trimmedName = name.trim();
+  const trimmedEmail = email.trim();
+  const trimmedSubject = subject.trim();
+  const trimmedMessage = message.trim();
+
+  if (trimmedName.length < 2 || trimmedName.length > 120) return false;
+  if (!/^\S+@\S+\.\S+$/.test(trimmedEmail) || trimmedEmail.length > 180) return false;
+  if (trimmedSubject.length < 3 || trimmedSubject.length > 180) return false;
+  if (trimmedMessage.length < 10 || trimmedMessage.length > 4000) return false;
+  return true;
+};
+
 const Contact = () => {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -74,17 +87,24 @@ const Contact = () => {
     e.preventDefault();
     if (isSubmitting) return;
 
+    const trimmedForm = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      subject: form.subject.trim(),
+      message: form.message.trim(),
+    };
+
+    if (!isValidContactForm(trimmedForm)) {
+      setSubmitError("Please complete all fields correctly.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError("");
     setSubmitted(false);
 
     try {
-      const payload = JSON.stringify({
-        name: form.name.trim(),
-        email: form.email.trim(),
-        subject: form.subject.trim(),
-        message: form.message.trim(),
-      });
+      const payload = JSON.stringify(trimmedForm);
 
       const attemptSubmit = async (baseUrl) => {
         const controller = new AbortController();
