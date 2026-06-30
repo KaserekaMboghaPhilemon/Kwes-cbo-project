@@ -53,12 +53,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed", reason: "method_not_allowed" });
   }
 
-  if (!isConfigured() || !transporter) {
-    return res
-      .status(503)
-      .json({ error: "Contact email is not configured on the server.", reason: "email_not_configured" });
-  }
-
   if (!isValidBody(req.body)) {
     return res.status(400).json({ error: "Please complete all fields correctly.", reason: "bad_input" });
   }
