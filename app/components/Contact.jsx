@@ -52,7 +52,9 @@ const MAPS_EMBED =
 const CONTACT_API_BASE =
   import.meta.env.VITE_CONTACT_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || "";
 
-const contactApiUrl = (path) => `${CONTACT_API_BASE}${path}`;
+const contactApiUrl = (base, path) => `${base}${path}`;
+
+const CONTACT_REQUEST_TIMEOUT_MS = 15000;
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -77,16 +79,44 @@ const Contact = () => {
     setSubmitted(false);
 
     try {
-      const res = await fetch(contactApiUrl("/api/contact"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          email: form.email.trim(),
-          subject: form.subject.trim(),
-          message: form.message.trim(),
-        }),
+      const payload = JSON.stringify({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        subject: form.subject.trim(),
+        message: form.message.trim(),
       });
+
+      const attemptSubmit = async (baseUrl) => {
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), CONTACT_REQUEST_TIMEOUT_MS);
+
+        try {
+          return await fetch(contactApiUrl(baseUrl, "/api/contact"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: payload,
+            signal: controller.signal,
+          });
+        } finally {
+          window.clearTimeout(timeoutId);
+        }
+      };
+
+      const fallbackBase = "";
+      let res;
+
+      if (CONTACT_API_BASE) {
+        try {
+          res = await attemptSubmit(CONTACT_API_BASE);
+          if (res && (res.status === 404 || res.status === 405)) {
+            res = await attemptSubmit(fallbackBase);
+          }
+        } catch (error) {
+          res = await attemptSubmit(fallbackBase);
+        }
+      } else {
+        res = await attemptSubmit(fallbackBase);
+      }
 
       if (!res.ok) {
         let errorMessage = t("contact.form.error");
