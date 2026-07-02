@@ -17,8 +17,11 @@ import heroImg from "../../src/Images/women-working.jpg";
 import poultryImg from "../../src/Images/improved-kienyeji.jpg";
 import eggImg from "../../src/Images/women-cleaning.jpg";
 import compoundImg from "../../src/Images/compound-view.jpg";
-import teamPhoto2 from "../../src/Images/kwes photos/kwes-team-2.png";
-import teamPhoto3 from "../../src/Images/kwes photos/kwes-team-3.png";
+import chairladyPhoto from "../../src/Images/kwes-staff/Jemima uwineza Chairlady..jpg";
+import viceChairladyPhoto from "../../src/Images/kwes-staff/Fabiola Nzoyikorera Vice chairlady.jpg";
+import secretaryPhoto from "../../src/Images/kwes-staff/Ndayikengurukiye Mireille  Secretary.png";
+import treasurerPhoto from "../../src/Images/kwes-staff/Nizigiyimana Nowella  Treasure.jpg";
+import advisorPhoto from "../../src/Images/kwes-staff/Nzeyimana Elysee   Adversor.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -55,13 +58,32 @@ const Home = () => {
     { value: "40+", labelKey: "home.stat.partners", Icon: HeartHandshake },
   ];
 
-  // Team spotlight: use the three provided photos and repeat to complete five profiles.
   const teamMembers = [
-    { name: "Uwineza Jemima", role: "Co-Founder & Director", image: teamPhoto2 },
-    { name: "Mama Adasa", role: "Programs Lead", image: teamPhoto2 },
-    { name: "Grace N.", role: "Finance & Accountability", image: teamPhoto3 },
-    { name: "Esther M.", role: "Training & Education", image: teamPhoto3 },
-    { name: "Joyce L.", role: "Community Mobilization", image: teamPhoto2 },
+    {
+      name: "Jemima Uwineza",
+      role: "Chairlady",
+      image: chairladyPhoto,
+    },
+    {
+      name: "Fabiola Nzoyikorera",
+      role: "Vice Chairlady",
+      image: viceChairladyPhoto,
+    },
+    {
+      name: "Mireille Ndayikengurukiye",
+      role: "Secretary",
+      image: secretaryPhoto,
+    },
+    {
+      name: "Nowella Nizigiyimana",
+      role: "Treasurer",
+      image: treasurerPhoto,
+    },
+    {
+      name: "Elysee Nzeyimana",
+      role: "Advisor",
+      image: advisorPhoto,
+    },
   ];
 
   return (

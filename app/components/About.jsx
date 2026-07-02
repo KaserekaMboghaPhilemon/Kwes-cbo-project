@@ -18,8 +18,11 @@ import storyImg from "../../src/Images/crowd-broilers-fed.jpg";
 import storyImg2 from "../../src/Images/women-cleaning2.jpg";
 import founderImg from "../../src/Images/improved-k-fed.jpg";
 import compoundImg from "../../src/Images/compound-view.jpg";
-import teamPhoto2 from "../../src/Images/kwes photos/kwes-team-2.png";
-import teamPhoto3 from "../../src/Images/kwes photos/kwes-team-3.png";
+import chairladyPhoto from "../../src/Images/kwes-staff/Jemima uwineza Chairlady..jpg";
+import viceChairladyPhoto from "../../src/Images/kwes-staff/Fabiola Nzoyikorera Vice chairlady.jpg";
+import secretaryPhoto from "../../src/Images/kwes-staff/Ndayikengurukiye Mireille  Secretary.png";
+import treasurerPhoto from "../../src/Images/kwes-staff/Nizigiyimana Nowella  Treasure.jpg";
+import advisorPhoto from "../../src/Images/kwes-staff/Nzeyimana Elysee   Adversor.png";
 
 /* ---------- Core values ---------- */
 const VALUES = [
@@ -53,34 +56,44 @@ const VALUES = [
 /* ---------- Founders ---------- */
 const FOUNDERS = [
   {
-    name: "Uwineza Jemima.",
+    name: "Jemima Uwineza",
     roleKey: "aboutPage.founders.uwineza.role",
     bioKey: "aboutPage.founders.uwineza.bio",
-    image: teamPhoto2,
+    image: chairladyPhoto,
+    initials: "JU",
+    tileClass: "from-[#004d40] to-[#0f766e]",
   },
   {
-    name: "Mama Adasa.",
+    name: "Fabiola Nzoyikorera",
     roleKey: "aboutPage.founders.adasa.role",
     bioKey: "aboutPage.founders.adasa.bio",
-    image: teamPhoto2,
+    image: viceChairladyPhoto,
+    initials: "FN",
+    tileClass: "from-[#ff6d00] to-[#c2410c]",
   },
   {
-    name: "Grace N.",
+    name: "Mireille Ndayikengurukiye",
     roleKey: "aboutPage.founders.grace.role",
     bioKey: "aboutPage.founders.grace.bio",
-    image: teamPhoto3,
+    image: secretaryPhoto,
+    initials: "MN",
+    tileClass: "from-slate-700 to-slate-900",
   },
   {
-    name: "Esther M.",
+    name: "Nowella Nizigiyimana",
     roleKey: "aboutPage.founders.esther.role",
     bioKey: "aboutPage.founders.esther.bio",
-    image: teamPhoto3,
+    image: treasurerPhoto,
+    initials: "NN",
+    tileClass: "from-emerald-700 to-emerald-950",
   },
   {
-    name: "Joyce L.",
+    name: "Elysee Nzeyimana",
     roleKey: "aboutPage.founders.joyce.role",
     bioKey: "aboutPage.founders.joyce.bio",
-    image: teamPhoto2,
+    image: advisorPhoto,
+    initials: "EN",
+    tileClass: "from-amber-700 to-amber-950",
   },
 ];
 
@@ -388,11 +401,29 @@ const About = () => {
                 className="group"
               >
                 <div className="relative aspect-[3/4] rounded-3xl overflow-hidden mb-4 ring-1 ring-black/5">
-                  <img
-                    src={f.image}
-                    alt={`${f.name}, ${t(f.roleKey)} at KWES`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-                  />
+                  {f.image ? (
+                    <img
+                      src={f.image}
+                      alt={`${f.name}, ${t(f.roleKey)} at KWES`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    />
+                  ) : (
+                    <div
+                      className={`flex h-full w-full items-end bg-gradient-to-br ${f.tileClass} p-4 text-white`}
+                    >
+                      <div className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-5 backdrop-blur-sm">
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/75">
+                          KWES
+                        </div>
+                        <div className="mt-8 text-5xl font-extrabold leading-none">
+                          {f.initials}
+                        </div>
+                        <p className="mt-2 text-xs font-medium text-white/80">
+                          {t(f.roleKey)}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#004d40]/85 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-500" />
                   <div className="absolute inset-x-4 bottom-4 flex gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition duration-500">
                     <button
